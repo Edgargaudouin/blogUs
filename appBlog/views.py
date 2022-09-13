@@ -3,7 +3,7 @@ from appBlog.models import *
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'home.html', {})
 
 def publication(request):
     return render(request, 'publication/publications.html')

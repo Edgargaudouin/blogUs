@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -10,18 +11,18 @@ class Publication(models.Model):
     caption = models.CharField(max_length=60) #Subtitulo
     category = models.CharField(max_length=20) #Categoria
     sub_category = models.CharField(max_length=20) #Subcategoria
-    author = models.CharField(max_length=25) #Autor
+    author = models.ForeignKey(User, on_delete=models.CASCADE) #Autor models.ForeignKey(User, on_delete=models.CASCADE) <- ¡Si borramos al autor va a borrar por cascada los posteos realizados por el mismo!
     body = models.TextField(max_length=9600) #Cuerpo
     publication_date = models.DateTimeField() #Fecha de publicacion
 
 
     def __str__(self):
-        return f"Blog: {self.title} - {self.author} - {self.publication_date}"
+        return f"{self.title} | {self.author} | {self.publication_date}"
 
 #Falta crear la imagen de la clase Publish
 
 class User(models.Model):
-    id = models.AutoField(primary_key=True) #ID cliente
+    id = models.AutoField(primary_key=True) #ID usuario
     name = models.CharField(max_length=20) #Nombre
     lastname = models.CharField(max_length=20) #Apellido
     nickname = models.CharField(max_length=20, unique=True) #Apodo
