@@ -9,7 +9,6 @@ class Publication(models.Model):
     id = models.AutoField(primary_key=True) #ID publicación
     title = models.CharField(max_length=60) #Titulo
     caption = models.CharField(max_length=60) #Subtitulo
-    category = models.CharField(max_length=20) #Categoria
     sub_category = models.CharField(max_length=20) #Subcategoria
     author = models.ForeignKey(User, on_delete=models.CASCADE) #Autor models.ForeignKey(User, on_delete=models.CASCADE) <- ¡Si borramos al autor va a borrar por cascada los posteos realizados por el mismo!
     body = models.TextField(max_length=9600) #Cuerpo
@@ -19,22 +18,19 @@ class Publication(models.Model):
     def __str__(self):
         return f"{self.title} | {self.author} | {self.publication_date}"
 
-#Falta crear la imagen de la clase Publish
+#Falta crear la imagen de la clase Publication
 
-class User(models.Model):
-    id = models.AutoField(primary_key=True) #ID usuario
-    name = models.CharField(max_length=20) #Nombre
-    lastname = models.CharField(max_length=20) #Apellido
-    nickname = models.CharField(max_length=20, unique=True) #Apodo
-    password = models.CharField(max_length=35) #Contraseña
-    email = models.EmailField(unique=True) #Email
-    birth_date = models.DateField() #Fecha de nacimiento
-    imagen= models.ImageField(upload_to='avatares', null=True, blank=True) #Hay que conectar con avatares
-
-    def __str__(self):
-        return f"Usuario: {self.name} {self.lastname} | {self.nickname}"
 
 class Comment(models.Model):
-    commenter_id = models.CharField(max_length=300) #ID comentarista #Debe pegar con el ID usuario investigar foreign key / clave foranea
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=True) #ID comentarista #Debe pegar con el ID usuario investigar foreign key / clave foranea
     commenter_name = models.CharField(max_length=200) #Nombre comentarista
-    comment_body = models.TextField(max_length=300) #Cuerpo de comentario
+    comment_body = models.TextField(max_length=300) #Cuerpo de comentario     ¡OJO ForeingKey de adentro hacia afuera! 
+
+
+#Crear un model Categoria -> relacion mucho a muchos o uno a muchos 
+class Category(models.Model):
+    category_name = models.CharField(max_length=200)
+    publications = models.ManyToManyField(Publication)
+
+    def __str__(self):
+        return f"{self.category_name}"

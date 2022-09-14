@@ -3,11 +3,10 @@ from appBlog.models import *
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html', {})
+    return render(request, 'appblog/home.html')
 
-def publication(request):
-    return render(request, 'publication/publications.html')
+def see_publication(request):
+    publication = Publication.objects.all()
+    return render(request, 'appblog/publication/publications.html', {'publication' : publication })
 
-def user(request):
-    return render(request, 'user/users.html')
 
