@@ -32,7 +32,7 @@ class User(models.Model):
     imagen= models.ImageField(upload_to='avatares', null=True, blank=True) #Hay que conectar con avatares
 
     def __str__(self):
-        return f"Usuario: {self.name} {self.lastname} - {self.nickname}"
+        return f"Usuario: {self.name} {self.lastname} | {self.nickname}"
 
 class Comment(models.Model):
     commenter_id = models.CharField(max_length=300) #ID comentarista #Debe pegar con el ID usuario investigar foreign key / clave foranea
