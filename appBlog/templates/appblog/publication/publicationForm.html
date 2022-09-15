@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,13 +11,16 @@
 </head>
 
 <body>
-    <h1>PAGINA DE PUBLICACIONES</h1>
-
-    {% for publication in publication %}
-    <table> {{ publication.title }} | {{ publication.author }} <br>
-        {{ publication.body }}
+    <h1>FORMULARIO DE PUBLICACIONES!</h1>
+    <form action="{% url 'addPublication' %}" method="POST"> {% csrf_token %}
+    
+    <table>
+        {{ formulary.as_table }}
     </table>
-    {% endfor %}
+    
+    <input type="submit", value="Enviar">
+    
+    </form>
 
     <a href="{% url 'home' %}">Regresar</a>
 </body>
