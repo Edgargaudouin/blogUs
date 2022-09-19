@@ -3,6 +3,8 @@ from appBlog.models import *
 from appBlog.forms import *
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
+
 
 
 def home(request):
@@ -11,12 +13,17 @@ def home(request):
 ############################# PUBLICATION ###############################
 #CREATE
 
+
+
+
+@login_required
 def add_publication(request):
     if request.method =='POST':
         form = PublicationForm(request.POST)     #CREAR   
           #  fields = ['title', 'caption','sub_category','body']
         if form.is_valid():
             data = form.cleaned_data
+            
             title = data['title']
             caption = data['caption']
             sub_category = data['sub_category']
@@ -32,6 +39,7 @@ def add_publication(request):
         return render (request, 'appblog/publication/publicationForm.html', {'formulary' : form})
 
 #READ
+@login_required
 def see_publication(request):
     publication = Publication.objects.all()
     return render(request, 'appblog/publication/publications.html', {'publication' : publication })

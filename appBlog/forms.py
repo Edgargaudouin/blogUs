@@ -28,20 +28,3 @@ class UserRegisterForm(UserCreationForm):
 
 
 
-
-"""
-    class ProfeForm(forms.Form):
-    nombre = forms.CharField(max_length=50)
-    apellido = forms.CharField(max_length=50)
-    email = forms.EmailField()
-    profesion = forms.CharField(max_length=50)
-
-
-
-    class Literatura_Form(forms.Form):
-    nombre_literatura = forms.CharField(max_length=50)
-    autor_literatura = forms.CharField(max_length=50)
-    editorial_literatura = forms.CharField(max_length=50)
-    descripcion_literatura = forms.CharField(widget=CKEditorWidget())
-    imglit = forms.ImageField(required=False)
-"""
