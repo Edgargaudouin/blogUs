@@ -1,23 +1,28 @@
 from django import forms
 from django.contrib.auth.models import User
 from appBlog.models import *
+from django.contrib.auth.forms import UserCreationForm
 
 
 
-class Publication_form(forms.Form):
+class PublicationForm(forms.ModelForm):
     
-    title = forms.CharField(max_length=60) #Titulo
-    caption = forms.CharField(max_length=60) #Subtitulo
-    sub_category = forms.CharField(max_length=20) #Subcategoria
-    author = forms.CharField(max_length=60) #Autor models.ForeignKey(User, on_delete=models.CASCADE) <- ¡Si borramos al autor va a borrar por cascada los posteos realizados por el mismo!
-    body = forms.CharField(max_length=9600) #Cuerpo
-    publication_date = forms.DateTimeField() #Fecha de publicacion
-
     class Meta:
         model = Publication
-        fields = ('title', 'caption', 'sub_category', 'author', 'body', 'publication_date')
+        fields = ['title', 'caption','sub_category','body']
 
-         
+ 
+
+class UserRegisterForm(UserCreationForm):
+
+    password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+        help_texts = {k:"" for k in fields}
+
 
 
 

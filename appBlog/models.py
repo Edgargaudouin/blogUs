@@ -12,7 +12,7 @@ class Publication(models.Model):
     sub_category = models.CharField(max_length=20) #Subcategoria
     author = models.ForeignKey(User, on_delete=models.CASCADE) #Autor models.ForeignKey(User, on_delete=models.CASCADE) <- ¡Si borramos al autor va a borrar por cascada los posteos realizados por el mismo!
     body = models.TextField(max_length=9600) #Cuerpo
-    publication_date = models.DateTimeField() #Fecha de publicacion
+    publication_date = models.DateTimeField(auto_now=True) #Fecha de publicacion
 
 
     def __str__(self):
@@ -34,3 +34,5 @@ class Category(models.Model):
 
     def __str__(self):
         return f"{self.category_name}"
+
+#CLASE CON PERFIL - CONSULTA DE ID PARA CONEXION 

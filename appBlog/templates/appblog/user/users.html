@@ -6,7 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USUARIOS</title>
 </head>
+
+    
 <body>
     <h1>PAGINA DE USUARIOS</h1>
+    {% for user in users %}
+     {{ users }} <br>
+     {% endfor %}
+
+    <a href="{% url 'home' %}">Regresar</a>
 </body>
+
+
 </html>
