@@ -15,21 +15,20 @@ def home(request):
 
 
 
-
 @login_required
 def add_publication(request):
+
     if request.method =='POST':
         form = PublicationForm(request.POST)     #CREAR   
           #  fields = ['title', 'caption','sub_category','body']
         if form.is_valid():
-            data = form.cleaned_data
-            
+            data = form.cleaned_data 
             title = data['title']
             caption = data['caption']
             sub_category = data['sub_category']
             body = data['body']
            
-            publi = Publication(title=title, caption=caption, sub_category=sub_category, body=body) 
+            publi = Publication( title=title, caption=caption, sub_category=sub_category,author=User(request.user.id), body=body) 
             publi.save()
             return render (request, 'appblog/home.html', {'message': "Publicacion creada"})
         else:                      #Si el formulario no puede ser validado
@@ -61,7 +60,7 @@ def see_publication(request):
 #DELETE
 
 
-
+@login_required
 def see_users(request):
     users = User.objects.all()
     return render(request, 'appblog/user/users.html', {'users' : users })

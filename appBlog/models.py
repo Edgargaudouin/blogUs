@@ -10,7 +10,7 @@ class Publication(models.Model):
     title = models.CharField(max_length=60) #Titulo
     caption = models.CharField(max_length=60) #Subtitulo
     sub_category = models.CharField(max_length=20) #Subcategoria
-    author = models.ForeignKey(User, on_delete=models.CASCADE, null = True, blank= True) #Autor models.ForeignKey(User, on_delete=models.CASCADE) <- ¡Si borramos al autor va a borrar por cascada los posteos realizados por el mismo!
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null =False, blank=False) #Autor models.ForeignKey(User, on_delete=models.CASCADE) <- ¡Si borramos al autor va a borrar por cascada los posteos realizados por el mismo!
     body = models.TextField(max_length=9600) #Cuerpo
     publication_date = models.DateTimeField(auto_now=True) #Fecha de publicacion
 
