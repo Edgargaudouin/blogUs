@@ -12,8 +12,21 @@ def home(request):
 
 ############################# PUBLICATION ###############################
 #CREATE
-
-
+def add_comment(request):
+    if request.method =="POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            comment_body = data['comment_body']
+        
+            commen = Comment(comment_body=comment_body,publication=Publication(request.publication.id) )
+            commen.save()
+            return render(request, 'appblog/home.html', {'message': "Comentario realizado "})
+        else:
+            return render(request, 'appblog/home.html', {'message': "Error al comentar la publicación"})
+    else: 
+        form = CommentForm()
+        return render(request, 'appblog/comment/commentForm.html', {'formulary' : form})
 
 @login_required
 def add_publication(request):
@@ -55,6 +68,8 @@ def see_publication(request):
 
 ############################# COMMENT ###############################
 #CREATE
+
+#def add_comment(self):
 #READ
 #UPDATE
 #DELETE

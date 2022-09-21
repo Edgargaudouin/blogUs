@@ -6,3 +6,4 @@ from appBlog.models import *
 
 admin.site.register(Publication)
 admin.site.register(Comment)
+admin.site.register(Category)

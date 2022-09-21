@@ -22,11 +22,14 @@ class Publication(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=True) #ID comentarista #Debe pegar con el ID usuario investigar foreign key / clave foranea
+    
     commenter_name = models.CharField(max_length=200) #Nombre comentarista
     comment_body = models.TextField(max_length=300) #Cuerpo de comentario     ¡OJO ForeingKey de adentro hacia afuera! 
+    publication = models.ForeignKey(Publication, related_name="comments", on_delete=models.CASCADE, null =False, blank=False) #Uso el related_name para relacionarlo con el template publications.html
+    date_added = models.DateTimeField(auto_now_add=True)
 
-
+    def __str__(self):
+        return f"{self.publication.title, self.commenter_name}"
 #Crear un model Categoria -> relacion mucho a muchos o uno a muchos 
 class Category(models.Model):
     category_name = models.CharField(max_length=200)

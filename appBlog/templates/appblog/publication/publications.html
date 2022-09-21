@@ -13,8 +13,25 @@
 
     {% for publication in publication %}
     <table> {{ publication.title }} | {{ publication.author }} <br>
-    {{ publication.body }}
-      
+        {{ publication.body }}
+        <br>
+        <a href="{% url 'addComment' %}">comentar</a>
+        <br>
+        Comentarios:
+        
+        {% if not publication.comments.all %}
+        Aún no hay comentarios... <a href="#">¡Crea uno!</a>
+        {% else %}
+        {% for comment in publication.comments.all %}
+        
+        <br>
+        <strong>{{ comment.commenter_name }}  |  {{ comment.date_added }} </strong>
+        <br>
+        {{ comment.comment_body }}
+        <br>
+        {% endfor %}
+        {% endif %}
+
     </table>
     {% endfor %}
 
