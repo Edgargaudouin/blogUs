@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INICIO</title>
+    <h2> BlogUs</h2>
+    <h3> Bienvenid@ {{ user.username }}</h3>
+</head>
+<body>
+    <h1>Home!</h1>
+    {{ message }}
+    <lo>
+    <h3>Publicaciones</h3>
+    <a class="btn btn-outline-dark mt-auto" href="{% url 'publication' %}">Ver</a> <br>
+    <a class="btn btn-outline-dark mt-auto" href="{% url 'addPublication' %}">Crear</a> <br>
+   
+    <hr>
+    <h3>Categorias</h3>
+    <a class="btn btn-outline-dark mt-auto" href="{% url 'categories' %}">Ver</a> <br>
+    <a class="btn btn-outline-dark mt-auto" href="{% url 'addCategory' %}">Agregar</a> <br>
+
+    <hr>
+    <h3>Usuarios</h3>  
+    <a class="btn btn-outline-dark mt-auto" href="{% url 'users' %}">Ver</a> <br>
+    <hr>
+    <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Deslogeo</a>
+    </lo>
+</body>
+
+</html>

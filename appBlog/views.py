@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from appBlog.models import *
 from appBlog.forms import *
 from django.contrib.auth.forms import AuthenticationForm
@@ -10,23 +10,13 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, 'appblog/home.html')
 
+@login_required
+def homeLogin(request):
+    return render(request, 'appblog/homeLogin.html')
+
+
 ############################# PUBLICATION ###############################
 #CREATE
-def add_comment(request):
-    if request.method =="POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            comment_body = data['comment_body']
-        
-            commen = Comment(comment_body=comment_body,publication=Publication(request.publication.id) )
-            commen.save()
-            return render(request, 'appblog/home.html', {'message': "Comentario realizado "})
-        else:
-            return render(request, 'appblog/home.html', {'message': "Error al comentar la publicación"})
-    else: 
-        form = CommentForm()
-        return render(request, 'appblog/comment/commentForm.html', {'formulary' : form})
 
 @login_required
 def add_publication(request):
@@ -62,14 +52,68 @@ def see_publication(request):
 
 ############################# CATEGORY ###############################
 #CREATE
+def add_category(request):
+    if request.method =='POST':
+        form = CategoryForm(request.POST)     #CREAR   
+          #  fields = ['title', 'caption','sub_category','body']
+        if form.is_valid():
+            data = form.cleaned_data 
+            category_name = data['category_name']
+        
+            cate = Category( category_name=category_name)
+            cate.save()
+            return render (request, 'appblog/home.html', {'message': "¡Categoria creada!"})
+        else:                      #Si el formulario no puede ser validado
+            return render (request, 'appblog/home.html', {'message':"Error"})
+    else:
+        form = CategoryForm()   #Medoto GET envia el formulario vacio
+        return render (request, 'appblog/category/categoryForm.html', {'formulary' : form})
 #READ
+@login_required
+def see_categories(request):
+    categories = Category.objects.all()
+    return render(request, 'appblog/category/categories.html', {'categories' : categories })
 #UPDATE
 #DELETE
 
 ############################# COMMENT ###############################
 #CREATE
 
-#def add_comment(self):
+@login_required
+def add_comment(request):
+    if request.method =="POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.save()
+        else:
+            return render(request, 'appblog/home.html', {'message': "Error al comentar la publicación"})
+    else: 
+        form = CommentForm()
+        return render(request, 'appblog/comment/commentForm.html', {'formulary' : form})
+
+
+@login_required
+def add_comment(request):
+    if request.method =="POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            comment_body = data['comment_body']
+            commen = Comment(comment_body=comment_body)
+            commen.save()
+            return redirect(add_comment, id)
+        else:
+            return render(request, 'appblog/home.html', {'message': "Error al comentar la publicación"})
+    else: 
+        form = CommentForm()
+        return render(request, 'appblog/comment/commentForm.html', {'formulary' : form})
+
+
+
+
+
+
 #READ
 #UPDATE
 #DELETE
@@ -77,8 +121,19 @@ def see_publication(request):
 
 @login_required
 def see_users(request):
-    users = User.objects.all()
-    return render(request, 'appblog/user/users.html', {'users' : users })
+    users = User.objects.all().values()
+    name_list = []
+ 
+    for item in users:
+        item.values()
+        name_list.append(item)
+    return name_list
+       
+       
+    print(name_list)
+    print(users)
+    print(f_name_list)
+    return render(request, 'appblog/user/users.html', {'users' : name_list })
 
 
 ############################# LOGIN ###############################
@@ -93,7 +148,7 @@ def login_request(request):
 
             if user is not None:
                 login(request, user)
-                return render(request, 'appblog/home.html', {"message":f"Bienvenido {user}"})
+                return render(request, 'appblog/homeLogin.html', {"message":f"Bienvenido {user}"})
             else:
                 return render(request, 'appblog/home.html', {"message":"Error, datos incorrectos"} )
         else:
@@ -109,8 +164,8 @@ def register(request):
         form= UserRegisterForm(request.POST)
         if form.is_valid():
             username=form.cleaned_data["username"]
+            
             #podriamos fijarnos que no exista un user en la bd con ese nombre
-
             form.save()
             return render(request, 'appblog/home.html', {'mensaje':"Usuario creado"})
         else:

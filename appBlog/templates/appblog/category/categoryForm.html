@@ -7,18 +7,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBLICACIONES</title>
+    <title>Categoriaaaa</title>
 </head>
 
 <body>
-    <h1>FORMULARIO DE PUBLICACIONES!</h1>
-    <form action="{% url 'addPublication' %}" method="POST"> {% csrf_token %}
+    <h1>Creacion de categoria!</h1>
+    <form action="{% url 'addCategory' %}" method="POST"> {% csrf_token %}
     
     <table>
         {{ formulary.as_table }}
     </table>
     
-    <input type="submit", value="Enviar">
+    <input type="submit", value="Guardar">
     
     </form>
 

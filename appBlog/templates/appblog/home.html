@@ -5,23 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INICIO</title>
+    <h2> BlogUs</h2>
+    <h3> Bienvenid@ {{ user.username }}</h3>
 </head>
 <body>
-    <h1>PAGINA DE INICIO</h1>
-    <h3>Hola como estasasdasd !!!</h3>
+    <h1>Home!</h1>
+   
     <lo>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'publication' %}">PUBLICACIONES</a> <br>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'addPublication' %}">CREAR PUBLICACIONES</a> <br>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'register' %}">REGISTRO DE USUARIO</a> <br>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'users' %}">VER USUARIO</a> <br>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'login' %}">LOGEO USER</a> <br>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'logout' %}">DESLOGEO USER</a> <br>
+        <a class="btn btn-outline-dark mt-auto" href="{% url 'login' %}">LOGEO USER</a> <br>
+        <a class="btn btn-outline-dark mt-auto" href="{% url 'register' %}">REGISTRO DE USUARIO</a> <br>
     </lo>
 
-    {{ message }}
 
- 
-
+  
 </body>
 
 </html>

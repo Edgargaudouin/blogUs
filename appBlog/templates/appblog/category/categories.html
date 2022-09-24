@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,22 +5,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBLICACIONES</title>
+    <title>Categorias</title>
 </head>
 
 <body>
-    <h1>FORMULARIO DE PUBLICACIONES!</h1>
-    <form action="{% url 'addPublication' %}" method="POST"> {% csrf_token %}
-    
-    <table>
-        {{ formulary.as_table }}
+    <h1>Todas la categorias</h1>
+
+    {% for item in categories %}
+
+    <table> 
+        <strong>{{ item.category_name }} </strong> 
+        <br>
     </table>
-    
-    <input type="submit", value="Enviar">
-    
-    </form>
+    {% endfor %} 
 
     <a href="{% url 'homeLogin' %}">Regresar</a>
+
 </body>
 
 </html>

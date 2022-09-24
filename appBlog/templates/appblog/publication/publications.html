@@ -12,30 +12,33 @@
     <h1>PAGINA DE PUBLICACIONES</h1>
 
     {% for publication in publication %}
-    <table> {{ publication.title }} | {{ publication.author }} <br>
+    <br><br>
+    <hr>
+    <table> <strong>{{ publication.title }} | {{ publication.author }}</strong> <br>
         {{ publication.body }}
         <br>
         <a href="{% url 'addComment' %}">comentar</a>
         <br>
-        Comentarios:
-        
+        <strong>Comentarios: </strong>
+        <br>
         {% if not publication.comments.all %}
         Aún no hay comentarios... <a href="#">¡Crea uno!</a>
         {% else %}
         {% for comment in publication.comments.all %}
         
-        <br>
         <strong>{{ comment.commenter_name }}  |  {{ comment.date_added }} </strong>
         <br>
         {{ comment.comment_body }}
         <br>
+        <hr>
         {% endfor %}
         {% endif %}
 
     </table>
-    {% endfor %}
+    {% endfor %} 
 
-    <a href="{% url 'home' %}">Regresar</a>
+    <a href="{% url 'homeLogin' %}">Regresar</a>
+
 </body>
 
 </html>
