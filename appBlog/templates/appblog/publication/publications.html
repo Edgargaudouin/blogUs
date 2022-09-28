@@ -10,7 +10,7 @@
 
 <body>
     <h1>PAGINA DE PUBLICACIONES</h1>
-
+    {{ message }}
     {% for publication in publication %}
     <br><br>
     <hr>
@@ -22,7 +22,7 @@
         <strong>Comentarios: </strong>
         <br>
         {% if not publication.comments.all %}
-        Aún no hay comentarios... <a href="#">¡Crea uno!</a>
+        Aún no hay comentarios... <a href="{% url 'addComment' %}">¡Crea uno!</a>
         {% else %}
         {% for comment in publication.comments.all %}
         
@@ -33,10 +33,15 @@
         <hr>
         {% endfor %}
         {% endif %}
-
+        <button>
+            <a href="{% url 'deletePublication' publication.id %}">Eliminar</a>
+        </button>
+        <button>
+            <a href="{% url 'updatePublication' publication.id %}">Editar</a>
+        </button>
     </table>
     {% endfor %} 
-
+    <a href="{% url 'addPublication' %}">Agregar nueva publicacion</a>
     <a href="{% url 'homeLogin' %}">Regresar</a>
 
 </body>

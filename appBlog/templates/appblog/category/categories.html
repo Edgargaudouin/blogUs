@@ -15,8 +15,11 @@
 
     <table> 
         <strong>{{ item.category_name }} </strong> 
-        <br>
+        <button>
+            <a href="{% url 'deleteCategory' item.id %}">ELIMINAR</a>
+        </button>
     </table>
+    
     {% endfor %} 
 
     <a href="{% url 'homeLogin' %}">Regresar</a>

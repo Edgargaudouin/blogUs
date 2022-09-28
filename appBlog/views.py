@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from unicodedata import category
+from django.shortcuts import render
 from appBlog.models import *
 from appBlog.forms import *
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-
+from django.http import HttpResponse
 
 
 def home(request):
@@ -20,7 +21,6 @@ def homeLogin(request):
 
 @login_required
 def add_publication(request):
-
     if request.method =='POST':
         form = PublicationForm(request.POST)     #CREAR   
           #  fields = ['title', 'caption','sub_category','body']
@@ -33,9 +33,9 @@ def add_publication(request):
            
             publi = Publication( title=title, caption=caption, sub_category=sub_category,author=User(request.user.id), body=body) 
             publi.save()
-            return render (request, 'appblog/home.html', {'message': "Publicacion creada"})
+            return render (request, 'appblog/homeLogin.html', {'message': "Publicacion creada"})
         else:                      #Si el formulario no puede ser validado
-            return render (request, 'appblog/home.html', {'message':"Error"})
+            return render (request, 'appblog/homeLogin.html', {'message':"Error"})
     else:
         form = PublicationForm()   #Medoto GET envia el formulario vacio
         return render (request, 'appblog/publication/publicationForm.html', {'formulary' : form})
@@ -47,9 +47,31 @@ def see_publication(request):
     return render(request, 'appblog/publication/publications.html', {'publication' : publication })
 
 #UPDATE
-
+@login_required
+def updatePublication(request, id):
+    publication = Publication.objects.get(id=id)
+    if request.method=="POST":
+        form=PublicationForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            publication.title = data["title"]
+            publication.caption = data["caption"]
+            publication.sub_category = data["sub_category"]
+            publication.body = data["body"]
+            publication.save()
+            publications = Publication.objects.all()
+            return render(request, 'appblog/publication/publications.html',{'publications':publications, 'message':'Publicacion actualizada'})
+    else:
+        form = PublicationForm(initial={'title':publication.title,'caption':publication.caption,'sub_category':publication.sub_category, 'body':publication.body })
+    return render(request, 'appblog/publication/edit.html', {'form':form, 'publication.title':publication.title, 'id':publication.id} )
 #DELETE
+@login_required
+def deletePublication(request, id):
+    publication = Publication.objects.get(id=id).delete()
+    publications = Publication.objects.all()
+    return render(request, 'appblog/publication/publications.html',{'publications':publications, 'message':'Publicacion borrada'})
 
+ 
 ############################# CATEGORY ###############################
 #CREATE
 def add_category(request):
@@ -62,9 +84,9 @@ def add_category(request):
         
             cate = Category( category_name=category_name)
             cate.save()
-            return render (request, 'appblog/home.html', {'message': "¡Categoria creada!"})
+            return render (request, 'appblog/homeLogin.html', {'message': "¡Categoria creada!"})
         else:                      #Si el formulario no puede ser validado
-            return render (request, 'appblog/home.html', {'message':"Error"})
+            return render (request, 'appblog/homeLogin.html', {'message':"Error"})
     else:
         form = CategoryForm()   #Medoto GET envia el formulario vacio
         return render (request, 'appblog/category/categoryForm.html', {'formulary' : form})
@@ -74,24 +96,17 @@ def see_categories(request):
     categories = Category.objects.all()
     return render(request, 'appblog/category/categories.html', {'categories' : categories })
 #UPDATE
+
+
 #DELETE
+def deleteCategory(request, id):
+    category=Category.objects.get(id=id).delete()
+    categories=Category.objects.all()
+    return render(request, 'appblog/category/categories.html',{'categories':categories})
+
 
 ############################# COMMENT ###############################
 #CREATE
-
-@login_required
-def add_comment(request):
-    if request.method =="POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.save()
-        else:
-            return render(request, 'appblog/home.html', {'message': "Error al comentar la publicación"})
-    else: 
-        form = CommentForm()
-        return render(request, 'appblog/comment/commentForm.html', {'formulary' : form})
-
 
 @login_required
 def add_comment(request):
@@ -104,15 +119,10 @@ def add_comment(request):
             commen.save()
             return redirect(add_comment, id)
         else:
-            return render(request, 'appblog/home.html', {'message': "Error al comentar la publicación"})
+            return render(request, 'appblog/homeLogin.html', {'message': "Error al comentar la publicación"})
     else: 
         form = CommentForm()
         return render(request, 'appblog/comment/commentForm.html', {'formulary' : form})
-
-
-
-
-
 
 #READ
 #UPDATE
@@ -121,20 +131,9 @@ def add_comment(request):
 
 @login_required
 def see_users(request):
-    users = User.objects.all().values()
-    name_list = []
- 
-    for item in users:
-        item.values()
-        name_list.append(item)
-    return name_list
-       
-       
-    print(name_list)
-    print(users)
-    print(f_name_list)
-    return render(request, 'appblog/user/users.html', {'users' : name_list })
-
+    users = User.objects.all()
+    return render(request, 'appblog/user/users.html', {'users' : users })
+    
 
 ############################# LOGIN ###############################
 
@@ -150,7 +149,7 @@ def login_request(request):
                 login(request, user)
                 return render(request, 'appblog/homeLogin.html', {"message":f"Bienvenido {user}"})
             else:
-                return render(request, 'appblog/home.html', {"message":"Error, datos incorrectos"} )
+                return render(request, 'appblog/homeLogin.html', {"message":"Error, datos incorrectos"} )
         else:
             return render(request, 'appblog/home.html', {"message":"Error: formulario erroneo"})
     else:

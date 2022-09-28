@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Publication(models.Model):
-    id = models.AutoField(primary_key=True) #ID publicación
+   
     title = models.CharField(max_length=60) #Titulo
     caption = models.CharField(max_length=60) #Subtitulo
     category = models.CharField(max_length=60, default="sin categoria!")

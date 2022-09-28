@@ -5,19 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INICIO</title>
-    <h2> BlogUs</h2>
     <h3> Bienvenid@ {{ user.username }}</h3>
 </head>
 <body>
-    <h1>Home!</h1>
-   
-    <lo>
-        <a class="btn btn-outline-dark mt-auto" href="{% url 'login' %}">LOGEO USER</a> <br>
-        <a class="btn btn-outline-dark mt-auto" href="{% url 'register' %}">REGISTRO DE USUARIO</a> <br>
-    </lo>
-
-
-  
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'home' %}">Inicio</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Ingresar</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Registrar</a>
+              </li>
+          
+            </ul>
+          </div>
+        </div>
+      </nav>
 </body>
 
 </html>
+
