@@ -18,7 +18,6 @@ def homeLogin(request):
 
 ############################# PUBLICATION ###############################
 #CREATE
-
 @login_required
 def addPublication(request):
     if request.method =='POST':
@@ -50,20 +49,26 @@ def seePublication(request):
 @login_required
 def updatePublication(request, id):
     publication = Publication.objects.get(id=id)
-    if request.method=="POST":
-        form=PublicationForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            publication.title = data["title"]
-            publication.caption = data["caption"]
-            publication.sub_category = data["sub_category"]
-            publication.body = data["body"]
-            publication.save()
-            publications = Publication.objects.all()
-            return render(request, 'appblog/publication/publications.html',{'publications':publications, 'message':'Publicacion actualizada'})
+    
+    loger_user = request.user
+    publication_author = publication.author
+    if loger_user == publication_author:
+        if request.method=="POST":
+            form=PublicationForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                publication.title = data["title"]
+                publication.caption = data["caption"]
+                publication.sub_category = data["sub_category"]
+                publication.body = data["body"]
+                publication.save()
+                publications = Publication.objects.all()
+                return render(request, 'appblog/publication/publications.html',{'publications':publications, 'message':'Publicacion actualizada'})
+        else:
+            form = PublicationForm(initial={'title':publication.title,'caption':publication.caption,'sub_category':publication.sub_category, 'body':publication.body })
+        return render(request, 'appblog/publication/edit.html', {'form':form, 'publication.title':publication.title, 'id':publication.id} )
     else:
-        form = PublicationForm(initial={'title':publication.title,'caption':publication.caption,'sub_category':publication.sub_category, 'body':publication.body })
-    return render(request, 'appblog/publication/edit.html', {'form':form, 'publication.title':publication.title, 'id':publication.id} )
+        return render(request, 'appblog/homeLogin.html', {'message':'Error: usuario sin autorización para editar esta publicación'} )
 #DELETE
 @login_required
 def deletePublication(request, id):
