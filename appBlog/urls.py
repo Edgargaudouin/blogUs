@@ -1,5 +1,5 @@
 from django.urls import path
-from appBlog.views import  seePublication, home, homeLogin, addPublication, register, seeUsers, loginRequest, addComment, addCategory, seeCategories, deleteCategory, updateCategory, updatePublication,  deletePublication
+from appBlog.views import  seePublication, home, homeLogin, about, addPublication, register, seeUsers, loginRequest, addComment, addCategory, seeCategories, deleteCategory, updateCategory, updatePublication,  deletePublication
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -7,6 +7,7 @@ urlpatterns = [
     #Home path
     path('home/', home, name = 'home'),
     path('homeLogin/', homeLogin, name='homeLogin'),
+    path('about/', about, name='about'),
     #Publication
     path('publications/', seePublication, name = 'publication'),
     path('publicationForm/', addPublication, name='addPublication'),

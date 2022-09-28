@@ -14,7 +14,7 @@
     {% for publication in publication %}
     <br><br>
     <hr>
-    <table> <strong>{{ publication.title }} | {{ publication.author }}</strong> <br>
+    <table> <strong>{{ publication.title }} | {{ publication.category }} | {{ publication.author }}</strong> <br>
         {{ publication.body }}
         <br>
         <a href="{% url 'addComment' %}">comentar</a>

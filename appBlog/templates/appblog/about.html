@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About </title>
+    <h2> BlogUs</h2>
+    <h3> Acerca de nosotros </h3>
+</head>
+<body>
+    <strong> <h3> Edgar Romero </h3> </strong>
+    Mi nombre es Edgar, actualmente resido en Mar del plata Argentina, pero nací y me crié en Puerto Ordaz Venezuela, tengo 24 años de
+    edad, entreno Jiu jitsu brasilero hace aproximadamente 9 años, por lo cual poseo un cinturón marrón en esta disciplina.
+    En mi formación academica puedo destacar los 4 años de cursado en Ingenieria Industrial en una famosa universidad de mi 
+    ciudad natal, pero por la situación politico-economica de Venezuela tuve que decirle adios a mi país y despedirme de mis familiares y amigos en busqueda de 
+    un mejor futuro... ya estando en Argentina alrededor del 2018 y con 20 años de edad decido empezar a estudiar licenciatura en comercialización
+    (marketing), y apoyandome en mi actual trabajo pude ganar un gran conocimiento y experiencia, en dicho trabajo tuve el primer contacto
+    con el analisis de datos, cosa que me llamó la atención y hoy por hoy me apasiona muchisimo, cosa por la cual decidí hacer el curso de Python
+    para seguir desarrollando conocimiento, y acá estoy intentando hacer un Blog lo más descente posible.
+
+    La idea del proyecto es hacer un blog para que personas de todo el mundo pueda hacer publicaciones con relacion a temas o tópicos de itnerés propio,
+    en particular me gustaría usarlo para dejar un registro de conceptos, ideas y técnicas del deporte que tanto me gusta y apasiona.
+
+    - Amor fati -
+{% if not request.user %}
+    <a href="{% url 'home' %}">Regresar2</a>
+{% else %}
+    <a href="{% url 'home' %}">Regresar</a>
+{% endif %}
+</body>
+
+</html>
+
+
+

@@ -15,6 +15,9 @@ def home(request):
 def homeLogin(request):
     return render(request, 'appblog/homeLogin.html')
 
+############################# ABOUT ###############################
+def about(request):
+    return render(request, 'appblog/about.html')
 
 ############################# PUBLICATION ###############################
 #CREATE
@@ -42,6 +45,7 @@ def addPublication(request):
 #READ
 @login_required
 def seePublication(request):
+
     publication = Publication.objects.all()
     return render(request, 'appblog/publication/publications.html', {'publication' : publication })
 
@@ -72,10 +76,15 @@ def updatePublication(request, id):
 #DELETE
 @login_required
 def deletePublication(request, id):
-    publication = Publication.objects.get(id=id).delete()
-    publications = Publication.objects.all()
-    return render(request, 'appblog/publication/publications.html',{'publications':publications, 'message':'Publicacion borrada'})
-
+    publication = Publication.objects.get(id=id)
+    loger_user = request.user
+    publication_author = publication.author
+    if loger_user == publication_author:
+        publication = Publication.objects.get(id=id).delete()
+        publications = Publication.objects.all()
+        return render(request, 'appblog/publication/publications.html',{'publications':publications, 'message':'Publicacion borrada'})
+    else:
+        return render(request, 'appblog/homeLogin.html', {'message':'Error: usuario sin autorización para eliminar esta publicación'} )       
  
 ############################# CATEGORY ###############################
 #CREATE
@@ -183,9 +192,9 @@ def register(request):
             
             #podriamos fijarnos que no exista un user en la bd con ese nombre
             form.save()
-            return render(request, 'appblog/home.html', {'mensaje':"Usuario creado"})
+            return render(request, 'appblog/user/userRegister.html', {'message':"Usuario creado"})
         else:
-            return render(request, 'appblog/user/userRegister.html', {'mensaje':"Error: ¡Ingresó datos invalidos!"})
+            return render(request, 'appblog/user/userRegister.html', {'message':"Error: ¡Ingresó datos invalidos!"})
     else:
         form=UserRegisterForm()
     return render(request, 'appblog/user/userRegister.html', {'form':form})

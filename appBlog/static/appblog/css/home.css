@@ -1,0 +1,12 @@
+.logo-navbar {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .logo-navbar > img {
+    width: inherit;
+  }
+  
+  .primary-color {
+    color: #334242;
+  }

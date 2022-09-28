@@ -1,33 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INICIO</title>
-    <h3> Bienvenid@ {{ user.username }}</h3>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-light">
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Shop Homepage - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="appblog/assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href=" {% static 'appblog/css/styles.css' %}" rel="stylesheet" />
+    <link href=" {% static 'appblog/css/home.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'home' %}">Inicio</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">Ingresar</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'register' %}">Registrar</a>
-              </li>
-          
-            </ul>
+          <div class="d-flex">
+            <a class="navbar-brand" href="{% url 'home' %}">
+              <div class="logo-navbar">
+                <img
+                  src=" {% static 'appblog/assets/logo-no-name.jpeg' %}"
+                  alt="logo"
+                  class="bd-placeholder-img rounded-circle"
+                />
+              </div>
+            </a>
           </div>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link fw-bolder text-bg-dark " href="{% url 'login' %}">Ingresar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-bolder text-bg-dark " href="{% url 'register' %}">Registrar</a>
+            </li>
+          </ul>
         </div>
       </nav>
-</body>
+    </header>
 
+    <main>
+      <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+          <h1 class="display-5 fw-bold">Welcome To What the Blog</h1>
+          <p class="col-md-8 fs-4">---</p>
+          <a href="{% url 'about' %}">
+            <button class="btn btn-primary btn-lg" type="button">
+              About us
+            </button>
+          </a>
+        </div>
+      </div>    
+    </main>
+
+  </body>
 </html>
-
