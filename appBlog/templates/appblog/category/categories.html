@@ -18,6 +18,9 @@
         <button>
             <a href="{% url 'deleteCategory' item.id %}">ELIMINAR</a>
         </button>
+        <button>
+            <a href="{% url 'updateCategory' item.id %}">Editar</a>
+        </button>
     </table>
     
     {% endfor %} 

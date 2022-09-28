@@ -20,7 +20,7 @@ def homeLogin(request):
 #CREATE
 
 @login_required
-def add_publication(request):
+def addPublication(request):
     if request.method =='POST':
         form = PublicationForm(request.POST)     #CREAR   
           #  fields = ['title', 'caption','sub_category','body']
@@ -42,7 +42,7 @@ def add_publication(request):
 
 #READ
 @login_required
-def see_publication(request):
+def seePublication(request):
     publication = Publication.objects.all()
     return render(request, 'appblog/publication/publications.html', {'publication' : publication })
 
@@ -74,7 +74,8 @@ def deletePublication(request, id):
  
 ############################# CATEGORY ###############################
 #CREATE
-def add_category(request):
+@login_required
+def addCategory(request):
     if request.method =='POST':
         form = CategoryForm(request.POST)     #CREAR   
           #  fields = ['title', 'caption','sub_category','body']
@@ -92,13 +93,27 @@ def add_category(request):
         return render (request, 'appblog/category/categoryForm.html', {'formulary' : form})
 #READ
 @login_required
-def see_categories(request):
+def seeCategories(request):
     categories = Category.objects.all()
     return render(request, 'appblog/category/categories.html', {'categories' : categories })
 #UPDATE
-
+@login_required
+def updateCategory(request, id):
+    category = Category.objects.get(id=id)
+    if request.method=="POST":
+        form=CategoryForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            category.category_name = data['category_name']
+            category.save()
+            categories = Category.objects.all()
+            return render(request, 'appblog/category/categories.html', {'categories':categories, 'message': 'Categoria actualizada'})
+    else:
+        form = CategoryForm(initial={'category_name':category.category_name})
+        return render(request, 'appblog/category/edit.html', {'form':form, 'category.category_name':category.category_name, 'id':category.id} )
 
 #DELETE
+@login_required
 def deleteCategory(request, id):
     category=Category.objects.get(id=id).delete()
     categories=Category.objects.all()
@@ -107,9 +122,8 @@ def deleteCategory(request, id):
 
 ############################# COMMENT ###############################
 #CREATE
-
 @login_required
-def add_comment(request):
+def addComment(request):
     if request.method =="POST":
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -130,14 +144,13 @@ def add_comment(request):
 
 
 @login_required
-def see_users(request):
+def seeUsers(request):
     users = User.objects.all()
     return render(request, 'appblog/user/users.html', {'users' : users })
     
 
 ############################# LOGIN ###############################
-
-def login_request(request):
+def loginRequest(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data = request.POST)
         if form.is_valid():
@@ -157,7 +170,6 @@ def login_request(request):
         return render(request, 'appblog/login.html', {"form":form})
 
 ############################# REGISTER ###############################
-
 def register(request):
     if request.method=="POST":
         form= UserRegisterForm(request.POST)
