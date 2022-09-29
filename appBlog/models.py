@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
@@ -32,13 +33,13 @@ class Publication(models.Model):
 
 class Comment(models.Model):
     
-    commenter_name = models.CharField(max_length=200) #Nombre comentarista
-    comment_body = models.TextField(max_length=300) #Cuerpo de comentario     ¡OJO ForeingKey de adentro hacia afuera! 
+    username = models.ForeignKey(User,on_delete=models.CASCADE, default='Edgar') #Nombre comentarista
+    body = models.TextField(max_length=300) #Cuerpo de comentario     ¡OJO ForeingKey de adentro hacia afuera! 
     publication = models.ForeignKey(Publication, related_name="comments", on_delete=models.CASCADE, null =False, blank=False) #Uso el related_name para relacionarlo con el template publications.html
     date_added = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return 'Comentado {} por {}'.format(self.comment_body, self.commenter_name)
+        return f'Comentado por {self.username}'
         
 
 

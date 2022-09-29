@@ -16,7 +16,7 @@ urlpatterns = [
     path('deletePublication/<id>', deletePublication, name='deletePublication'),
  
     path('seeUsers/' ,seeUsers, name= "users"),
-    path('commentForm/', addComment, name='addComment'),
+    path('commentForm/<publication_id>', addComment, name='addComment'),
 
     #Categories
     path('categoryForm/', addCategory, name='addCategory'),

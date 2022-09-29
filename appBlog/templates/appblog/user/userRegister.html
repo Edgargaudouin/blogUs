@@ -1,29 +1,69 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
     <title>Registro de usuarios</title>
-</head>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="appblog/assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href=" {% static 'appblog/css/styles.css' %}" rel="stylesheet" />
+    <link href=" {% static 'appblog/css/home.css' %}" rel="stylesheet" />
+  </head>
 
-<body>
-    
-    <h1>FORMULARIO DE USUARIOS!</h1>
-    <form action="{% url 'register' %}" method="POST"> {% csrf_token %}
-    
-    {{ form.as_table }}
-  
-    
-    <input type="submit", value="Registrar">
-    
-    </form>
-    {{ message }}
+  <body>
+    <section class="h-100">
+      <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+          <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+            <div class="text-center my-5">
+              <img
+                src=" {% static 'appblog/assets/logo.jpeg' %}"
+                alt="logo"
+                width="150"
+                class="rounded-circle"
+              />
+            </div>
+            <div class="card shadow-lg">
+              <div class="card-body p-5">
+                <h1 class="fs-4 card-title fw-bold mb-4">   Registro</h1>
 
-    <a href="{% url 'home' %}">Regresar</a>
-</body>
 
+                <form action="{% url 'register' %}" method="POST">
+                  {% csrf_token %} {{ form.as_table }}
+
+                  <input type="submit" value="Registrar" class="btn btn-outline-dark mt-2 w-100" type="submit" />
+                </form>
+                {{ message }}
+              </div>
+              <div class="card-footer py-3 border-0">
+                <div class="text-center">
+                  Ya tienes una cuenta
+                  <a href="{% url 'login' %}" class="text-dark">Login</a>
+                </div>
+                <div class="text-center">
+                    <a href="{% url 'home' %}" class="text-dark">Regresar a Home</a>
+                  </div>
+              </div>
+            </div>
+            <div class="text-center mt-5 text-muted">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="js/login.js"></script>
+  </body>
 </html>

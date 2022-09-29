@@ -11,24 +11,29 @@
 <body>
     <h1>PAGINA DE PUBLICACIONES</h1>
     {{ message }}
-    {% for publication in publication %}
+    {% if not publications.all %}
+    <br>
+    Aún no hay publicaciones <a href="{% url 'addPublication'  %}">¡Crea una!</a>
+    <br>
+    {% else %}
+    {% for publication in publications %}
     <br><br>
     <hr>
     <table> <strong>{{ publication.title }} | {{ publication.category }} | {{ publication.author }}</strong> <br>
         {{ publication.body }}
         <br>
-        <a href="{% url 'addComment' %}">comentar</a>
+        <a href="{% url 'addComment' publication.id %}">comentar</a>
         <br>
         <strong>Comentarios: </strong>
         <br>
         {% if not publication.comments.all %}
-        Aún no hay comentarios... <a href="{% url 'addComment' %}">¡Crea uno!</a>
+        Aún no hay comentarios... <a href="{% url 'addComment' publication.id %}">¡Crea uno!</a>
         {% else %}
         {% for comment in publication.comments.all %}
         
-        <strong>{{ comment.commenter_name }}  |  {{ comment.date_added }} </strong>
+        <strong>{{ comment.username }}  |  {{ comment.date_added }} </strong>
         <br>
-        {{ comment.comment_body }}
+        {{ comment.body }}
         <br>
         <hr>
         {% endfor %}
@@ -41,6 +46,7 @@
         </button>
     </table>
     {% endfor %} 
+    {% endif %}
     <a href="{% url 'addPublication' %}">Agregar nueva publicacion</a>
     <a href="{% url 'homeLogin' %}">Regresar</a>
 

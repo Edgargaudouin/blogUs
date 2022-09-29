@@ -9,9 +9,9 @@
 
     
 <body>
-    <h1>PAGINA DE USUARIOS</h1>
+    <h1>Usuarios de What the blog</h1>
     {% for user in users %}
-     {{ users }} <br>
+     {{ user.username }} <br>
      {% endfor %}
 
     <a href="{% url 'homeLogin' %}">Regresar</a>

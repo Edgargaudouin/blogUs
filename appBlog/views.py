@@ -1,3 +1,4 @@
+from email import message
 from unicodedata import category
 from django.shortcuts import render
 from appBlog.models import *
@@ -24,6 +25,7 @@ def about(request):
 @login_required
 def addPublication(request):
     if request.method =='POST':
+       
         form = PublicationForm(request.POST)     #CREAR   
           #  fields = ['title', 'caption','sub_category','body']
         if form.is_valid():
@@ -32,8 +34,8 @@ def addPublication(request):
             caption = data['caption']
             sub_category = data['sub_category']
             body = data['body']
-           
-            publi = Publication( title=title, caption=caption, sub_category=sub_category,author=User(request.user.id), body=body) 
+            category = data['category']
+            publi = Publication( title=title, caption=caption,category=category, sub_category=sub_category,author=User(request.user.id), body=body) 
             publi.save()
             return render (request, 'appblog/homeLogin.html', {'message': "Publicacion creada"})
         else:                      #Si el formulario no puede ser validado
@@ -46,8 +48,8 @@ def addPublication(request):
 @login_required
 def seePublication(request):
 
-    publication = Publication.objects.all()
-    return render(request, 'appblog/publication/publications.html', {'publication' : publication })
+    publications = Publication.objects.all()
+    return render(request, 'appblog/publication/publications.html', {'publications' : publications })
 
 #UPDATE
 @login_required
@@ -137,21 +139,22 @@ def deleteCategory(request, id):
 ############################# COMMENT ###############################
 #CREATE
 @login_required
-def addComment(request):
-    if request.method =="POST":
+def addComment(request, publication_id):
+    if request.method=='POST':
         form = CommentForm(request.POST)
+        user_id = User.objects.get(username=request.user.username)
         if form.is_valid():
-            data = form.cleaned_data
-            comment_body = data['comment_body']
-            commen = Comment(comment_body=comment_body)
-            commen.save()
-            return redirect(add_comment, id)
-        else:
-            return render(request, 'appblog/homeLogin.html', {'message': "Error al comentar la publicación"})
-    else: 
-        form = CommentForm()
-        return render(request, 'appblog/comment/commentForm.html', {'formulary' : form})
+            data=form.cleaned_data
+            body=data['body']
 
+            commen = Comment(username=user_id, body=body, publication=Publication(publication_id))
+            commen.save()
+            return render(request, 'appblog/publication/publications.html', {'message': 'Comentario realizado'})
+        else:
+            return render(request, 'appblog/publication/publications.html', {'message':'Error al realizar el comentario'})
+    else:
+        form = CommentForm()
+        return render(request, 'appblog/comment/commentForm.html',{'form':form, 'publication_id':publication_id})
 #READ
 #UPDATE
 #DELETE
@@ -166,7 +169,7 @@ def seeUsers(request):
 ############################# LOGIN ###############################
 def loginRequest(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data = request.POST)
+        form = LoginForm(request, data = request.POST)
         if form.is_valid():
             username = request.POST['username']
             password = request.POST['password']
@@ -180,7 +183,7 @@ def loginRequest(request):
         else:
             return render(request, 'appblog/home.html', {"message":"Error: formulario erroneo"})
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
         return render(request, 'appblog/login.html', {"form":form})
 
 ############################# REGISTER ###############################
