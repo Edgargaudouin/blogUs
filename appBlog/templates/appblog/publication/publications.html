@@ -17,10 +17,24 @@
     <br>
     {% else %}
     {% for publication in publications %}
-    <br><br>
-    <hr>
+    
+    
     <table> <strong>{{ publication.title }} | {{ publication.category }} | {{ publication.author }}</strong> <br>
         {{ publication.body }}
+        {% if request.user == publication.author %}
+        <br>
+    <button>
+        <a href="{% url 'deletePublication' publication.id %}">Eliminar</a>
+    </button>
+    <button>
+        <a href="{% url 'updatePublication' publication.id %}">Editar</a>
+    </button>
+
+    {% endif %}
+    <br>
+    <button>
+        <a href="{% url 'seePublication' publication.id %}">Leer más</a>
+    </button>
         <br>
         <a href="{% url 'addComment' publication.id %}">comentar</a>
         <br>
@@ -34,19 +48,22 @@
         <strong>{{ comment.username }}  |  {{ comment.date_added }} </strong>
         <br>
         {{ comment.body }}
-        <br>
+        
         <hr>
+        
+        
         {% endfor %}
         {% endif %}
-        <button>
-            <a href="{% url 'deletePublication' publication.id %}">Eliminar</a>
-        </button>
-        <button>
-            <a href="{% url 'updatePublication' publication.id %}">Editar</a>
-        </button>
+        
     </table>
+    <br>
+    
     {% endfor %} 
+   
+
     {% endif %}
+
+  
     <a href="{% url 'addPublication' %}">Agregar nueva publicacion</a>
     <a href="{% url 'homeLogin' %}">Regresar</a>
 

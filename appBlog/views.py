@@ -46,10 +46,15 @@ def addPublication(request):
 
 #READ
 @login_required
-def seePublication(request):
+def seePublications(request):
 
     publications = Publication.objects.all()
     return render(request, 'appblog/publication/publications.html', {'publications' : publications })
+
+@login_required
+def seePublication(request, id):
+    publication = Publication.objects.get(id=id)
+    return render(request, 'appblog/publication/publication.html', {'publication' : publication})
 
 #UPDATE
 @login_required
@@ -155,10 +160,7 @@ def addComment(request, publication_id):
     else:
         form = CommentForm()
         return render(request, 'appblog/comment/commentForm.html',{'form':form, 'publication_id':publication_id})
-#READ
 #UPDATE
-#DELETE
-
 
 @login_required
 def seeUsers(request):
