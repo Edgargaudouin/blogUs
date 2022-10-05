@@ -11,7 +11,9 @@
 <body>
     <h1>Usuarios de What the blog</h1>
     {% for user in users %}
-     {{ user.username }} <br>
+     {{ user.username }} /
+     {{ user.email }}
+     {{ user.first_name }} <br>
      {% endfor %}
 
     <a href="{% url 'homeLogin' %}">Regresar</a>

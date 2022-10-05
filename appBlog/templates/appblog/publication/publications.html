@@ -20,7 +20,7 @@
     
     
     <table> <strong>{{ publication.title }} | {{ publication.category }} | {{ publication.author }}</strong> <br>
-        {{ publication.body }}
+        {{ publication.body | safe }}
         {% if request.user == publication.author %}
         <br>
     <button>

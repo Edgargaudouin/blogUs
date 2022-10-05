@@ -14,8 +14,12 @@
     <table> <strong>Titulo:{{ publication.title }} <br>
         Categoria: {{ publication.category }} <br>
         Autor: {{ publication.author }}</strong> <hr>
-        {{ publication.body }}
-     
+        {{ publication.body | safe }}
+        <br>
+        {% if publication.image %}
+            <img src= "{{ publication.image.url }}"
+            width=200>
+        {% endif %}
         <a href="{% url 'publication' %}">Regresar</a>
 </body>
 

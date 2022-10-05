@@ -12,10 +12,11 @@
 
 <body>
     <h1>FORMULARIO DE PUBLICACIONES!</h1>
-    <form action="{% url 'addPublication' %}" method="POST"> {% csrf_token %}
-    
+    <form action="{% url 'addPublication' %}" method="POST" enctype='multipart/form-data'> {% csrf_token %}
+        
     <table>
         {{ formulary.as_table }}
+        {{ formulary.media }}
     </table>
     
     <input type="submit", value="Publicar">

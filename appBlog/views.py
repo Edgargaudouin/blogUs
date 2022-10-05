@@ -26,7 +26,7 @@ def about(request):
 def addPublication(request):
     if request.method =='POST':
        
-        form = PublicationForm(request.POST)     #CREAR   
+        form = PublicationForm(request.POST, request.FILES)     #CREAR   
           #  fields = ['title', 'caption','sub_category','body']
         if form.is_valid():
             data = form.cleaned_data 
@@ -35,7 +35,8 @@ def addPublication(request):
             sub_category = data['sub_category']
             body = data['body']
             category = data['category']
-            publi = Publication( title=title, caption=caption,category=category, sub_category=sub_category,author=User(request.user.id), body=body) 
+            image = data['image']
+            publi = Publication( title=title, caption=caption,category=category, sub_category=sub_category,author=User(request.user.id), body=body, image=image)
             publi.save()
             return render (request, 'appblog/homeLogin.html', {'message': "Publicacion creada"})
         else:                      #Si el formulario no puede ser validado
@@ -65,18 +66,24 @@ def updatePublication(request, id):
     publication_author = publication.author
     if loger_user == publication_author:
         if request.method=="POST":
-            form=PublicationForm(request.POST)
+            form=PublicationForm(request.POST, request.FILES)
+          #  if publication.image:#
+               # return render(request, 'appblog/publication/publications.html',{'message':'no cargaste imagen'})
             if form.is_valid():
                 data = form.cleaned_data
                 publication.title = data["title"]
                 publication.caption = data["caption"]
                 publication.sub_category = data["sub_category"]
                 publication.body = data["body"]
+                publication.image = data["image"]
                 publication.save()
                 publications = Publication.objects.all()
+                
                 return render(request, 'appblog/publication/publications.html',{'publications':publications, 'message':'Publicacion actualizada'})
+            else:
+                return render(request, 'appblog/publication/publications.html',{'message':'ERROR'})
         else:
-            form = PublicationForm(initial={'title':publication.title,'caption':publication.caption,'sub_category':publication.sub_category, 'body':publication.body })
+            form = PublicationForm(initial={'title':publication.title,'caption':publication.caption,'sub_category':publication.sub_category, 'body':publication.body, 'image':publication.image })
         return render(request, 'appblog/publication/edit.html', {'form':form, 'publication.title':publication.title, 'id':publication.id} )
     else:
         return render(request, 'appblog/homeLogin.html', {'message':'Error: usuario sin autorización para editar esta publicación'} )
