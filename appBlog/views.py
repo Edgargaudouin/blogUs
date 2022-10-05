@@ -6,6 +6,7 @@ from appBlog.forms import *
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
 
 
@@ -39,20 +40,19 @@ def addPublication(request):
             publi = Publication( title=title, caption=caption,category=category, sub_category=sub_category,author=User(request.user.id), body=body, image=image)
             publi.save()
             return render (request, 'appblog/homeLogin.html', {'message': "Publicacion creada"})
-        else:                      #Si el formulario no puede ser validado
+        else:                      
             return render (request, 'appblog/homeLogin.html', {'message':"Error"})
     else:
-        form = PublicationForm()   #Medoto GET envia el formulario vacio
+        form = PublicationForm()   
         return render (request, 'appblog/publication/publicationForm.html', {'formulary' : form})
 
 #READ
 @login_required
 def seePublications(request):
-
     publications = Publication.objects.all()
     return render(request, 'appblog/publication/publications.html', {'publications' : publications })
 
-@login_required
+@login_required #Visualización en detalle de la publicación 
 def seePublication(request, id):
     publication = Publication.objects.get(id=id)
     return render(request, 'appblog/publication/publication.html', {'publication' : publication})
@@ -61,14 +61,11 @@ def seePublication(request, id):
 @login_required
 def updatePublication(request, id):
     publication = Publication.objects.get(id=id)
-    
     loger_user = request.user
     publication_author = publication.author
     if loger_user == publication_author:
         if request.method=="POST":
             form=PublicationForm(request.POST, request.FILES)
-          #  if publication.image:#
-               # return render(request, 'appblog/publication/publications.html',{'message':'no cargaste imagen'})
             if form.is_valid():
                 data = form.cleaned_data
                 publication.title = data["title"]
@@ -78,7 +75,6 @@ def updatePublication(request, id):
                 publication.image = data["image"]
                 publication.save()
                 publications = Publication.objects.all()
-                
                 return render(request, 'appblog/publication/publications.html',{'publications':publications, 'message':'Publicacion actualizada'})
             else:
                 return render(request, 'appblog/publication/publications.html',{'message':'ERROR'})
@@ -87,6 +83,7 @@ def updatePublication(request, id):
         return render(request, 'appblog/publication/edit.html', {'form':form, 'publication.title':publication.title, 'id':publication.id} )
     else:
         return render(request, 'appblog/homeLogin.html', {'message':'Error: usuario sin autorización para editar esta publicación'} )
+
 #DELETE
 @login_required
 def deletePublication(request, id):
@@ -105,19 +102,17 @@ def deletePublication(request, id):
 @login_required
 def addCategory(request):
     if request.method =='POST':
-        form = CategoryForm(request.POST)     #CREAR   
-          #  fields = ['title', 'caption','sub_category','body']
+        form = CategoryForm(request.POST)    
         if form.is_valid():
             data = form.cleaned_data 
             category_name = data['category_name']
-        
             cate = Category( category_name=category_name)
             cate.save()
             return render (request, 'appblog/homeLogin.html', {'message': "¡Categoria creada!"})
-        else:                      #Si el formulario no puede ser validado
+        else:                     
             return render (request, 'appblog/homeLogin.html', {'message':"Error"})
     else:
-        form = CategoryForm()   #Medoto GET envia el formulario vacio
+        form = CategoryForm()  
         return render (request, 'appblog/category/categoryForm.html', {'formulary' : form})
 #READ
 @login_required
@@ -125,7 +120,7 @@ def seeCategories(request):
     categories = Category.objects.all()
     return render(request, 'appblog/category/categories.html', {'categories' : categories })
 #UPDATE
-@login_required
+@staff_member_required
 def updateCategory(request, id):
     category = Category.objects.get(id=id)
     if request.method=="POST":
@@ -141,7 +136,7 @@ def updateCategory(request, id):
         return render(request, 'appblog/category/edit.html', {'form':form, 'category.category_name':category.category_name, 'id':category.id} )
 
 #DELETE
-@login_required
+@staff_member_required
 def deleteCategory(request, id):
     category=Category.objects.get(id=id).delete()
     categories=Category.objects.all()
@@ -158,7 +153,6 @@ def addComment(request, publication_id):
         if form.is_valid():
             data=form.cleaned_data
             body=data['body']
-
             commen = Comment(username=user_id, body=body, publication=Publication(publication_id))
             commen.save()
             return render(request, 'appblog/publication/publications.html', {'message': 'Comentario realizado'})
@@ -168,6 +162,20 @@ def addComment(request, publication_id):
         form = CommentForm()
         return render(request, 'appblog/comment/commentForm.html',{'form':form, 'publication_id':publication_id})
 #UPDATE
+#DELETE 
+def deleteComment(request, id):
+    comment = Comment.objects.get(id=id)
+    loger_user = request.user
+    comment_author = comment.author
+    if loger_user == comment_author:
+        comment = Comment.objects.get(id=id).delete()
+        comments = Comment.objects.all()
+        return render(request, 'appblog/publication/publications.html',{'publications':comments, 'message':'Comentario eliminado'})
+    else:
+        return render(request, 'appblog/homeLogin.html', {'message':'Error: usuario sin autorización para eliminar esta publicación'} )       
+ 
+
+############################# USER ###############################
 
 @login_required
 def seeUsers(request):

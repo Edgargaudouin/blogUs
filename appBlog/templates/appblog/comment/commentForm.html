@@ -12,10 +12,12 @@
 
 <body>
     <h1>FORMULARIO DE Comentarios!</h1>
-    <form action="{% url 'addComment' publication_id %}" method="POST"> {% csrf_token %}
+    <form action="{% url 'addComment' publication_id %}" method="POST" > {% csrf_token %}
     
     <table>
+        {{ form.media  }}
         {{ form.as_table }}
+        
     </table>
     
     <input type="submit", value="Comentar">

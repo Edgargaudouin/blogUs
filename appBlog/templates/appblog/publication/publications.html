@@ -29,7 +29,7 @@
     <button>
         <a href="{% url 'updatePublication' publication.id %}">Editar</a>
     </button>
-
+    
     {% endif %}
     <br>
     <button>
@@ -38,29 +38,9 @@
         <br>
         <a href="{% url 'addComment' publication.id %}">comentar</a>
         <br>
-        <strong>Comentarios: </strong>
-        <br>
-        {% if not publication.comments.all %}
-        Aún no hay comentarios... <a href="{% url 'addComment' publication.id %}">¡Crea uno!</a>
-        {% else %}
-        {% for comment in publication.comments.all %}
-        
-        <strong>{{ comment.username }}  |  {{ comment.date_added }} </strong>
-        <br>
-        {{ comment.body }}
-        
-        <hr>
-        
-        
-        {% endfor %}
-        {% endif %}
-        
     </table>
     <br>
-    
     {% endfor %} 
-   
-
     {% endif %}
 
   
