@@ -71,7 +71,7 @@
         
         <table> <strong>{{ publication.title }} | {{ publication.category }} | {{ publication.author }}</strong> <br>
             
-            {{ publication.body| slice:"255" | safe   }}
+            {{ publication.body| slice:"255" | safe   }} ... <button href #boton a categoria 
             <br>
             {% endfor %}
         {% endif %}

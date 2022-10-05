@@ -15,9 +15,9 @@
 
     <table> 
         <strong>{{ item.category_name }} </strong> 
-        {% if request.user is_superuser %}
+        {% if request.user.is_staff %}
         <button>
-            <a href="{% url 'deleteCategory' item.id %}">ELIMINAR</a>
+            <a href="{% url 'deleteCategory' item.id %}">Eliminar</a>
         </button>
         <button>
             <a href="{% url 'updateCategory' item.id %}">Editar</a>

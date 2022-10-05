@@ -1,4 +1,5 @@
 from email import message
+from optparse import Values
 from unicodedata import category
 from django.shortcuts import render
 from appBlog.models import *
@@ -119,7 +120,8 @@ def addCategory(request):
 @login_required
 def seeCategories(request):
     categories = Category.objects.all()
-    return render(request, 'appblog/category/categories.html', {'categories' : categories })
+    return render(request, 'appblog/category/categories.html', {'categories':categories})
+
 #UPDATE
 @staff_member_required
 def updateCategory(request, id):
@@ -140,8 +142,15 @@ def updateCategory(request, id):
 @staff_member_required
 def deleteCategory(request, id):
     category=Category.objects.get(id=id).delete()
+    superusers = User.objects.filter(is_superuser=True)
     categories=Category.objects.all()
-    return render(request, 'appblog/category/categories.html',{'categories':categories})
+  
+    return render(request,'appblog/category/categories.html', {'categories':categories,'message':'Categoria eliminada' })
+    
+
+
+    
+    
 
 
 ############################# COMMENT ###############################
