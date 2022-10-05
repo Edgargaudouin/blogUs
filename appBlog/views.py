@@ -162,11 +162,30 @@ def addComment(request, publication_id):
         form = CommentForm()
         return render(request, 'appblog/comment/commentForm.html',{'form':form, 'publication_id':publication_id})
 #UPDATE
+def updateComment(request, id):
+    comment = Comment.objects.get(id=id)
+    loger_user = request.user
+    comment_author = comment.username
+    if loger_user == comment_author:
+        if request.method=='POST':
+            form=CommentForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                comment.body = data['body']
+                comment.save()
+                comments = Comment.objects.all()
+                return render(request, 'appblog/publication/publications.html', {'message':'Comentario actualizado'})
+        else:
+            form = CommentForm(initial={'body':comment.body})
+            return render(request, 'appblog/comment/edit.html', {'form':form, 'comment.body':comment.body, 'id': comment.id})
+    
+    else:
+        return render(request, 'appblog/publication/publications.html', {'message':'Usuario no habilitado'})
 #DELETE 
 def deleteComment(request, id):
     comment = Comment.objects.get(id=id)
     loger_user = request.user
-    comment_author = comment.author
+    comment_author = comment.username
     if loger_user == comment_author:
         comment = Comment.objects.get(id=id).delete()
         comments = Comment.objects.all()

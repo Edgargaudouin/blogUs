@@ -33,7 +33,16 @@
         {{ comment.body | safe }}
         
         <hr>
-        
+        {% if request.user == comment.username %}
+        <br>
+    <button>
+        <a href="{% url 'deleteComment' comment.id %}">Eliminar</a>
+    </button>
+    <button>
+        <a href="{% url 'updateComment' comment.id %}">Editar</a>
+    </button>
+    
+        {% endif %}
         
         {% endfor %}
         {% endif %}
