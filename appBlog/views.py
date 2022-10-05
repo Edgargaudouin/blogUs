@@ -11,7 +11,8 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return render(request, 'appblog/home.html')
+    publications = Publication.objects.all()
+    return render(request, 'appblog/home.html',{'publications' : publications })
 
 @login_required
 def homeLogin(request):
@@ -200,6 +201,15 @@ def deleteComment(request, id):
 def seeUsers(request):
     users = User.objects.all()
     return render(request, 'appblog/user/users.html', {'users' : users })
+
+@login_required
+def updateUser(request, id):
+    pass
+
+@login_required
+def deleteUSer(request, id):
+    pass
+
     
 
 ############################# LOGIN ###############################

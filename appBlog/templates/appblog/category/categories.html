@@ -15,12 +15,14 @@
 
     <table> 
         <strong>{{ item.category_name }} </strong> 
+        {% if request.user is_superuser %}
         <button>
             <a href="{% url 'deleteCategory' item.id %}">ELIMINAR</a>
         </button>
         <button>
             <a href="{% url 'updateCategory' item.id %}">Editar</a>
         </button>
+        {% endif %}
     </table>
     
     {% endfor %} 

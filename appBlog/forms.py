@@ -8,9 +8,19 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 class PublicationForm(forms.ModelForm):
     image = forms.ImageField()
+    body = forms.CharField(
+        label="mensaje",
+        widget=forms.Textarea(attrs={'class':'form-control', 'rows': 3})
+    )
     class Meta:
         model = Publication
         fields = ['title','caption','category','sub_category','body', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', }),
+            'caption': forms.TextInput(attrs={'class': 'form-control', }),
+            'category': forms.Select(attrs={'class': 'form-control', }),
+            'sub_category': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
  
 
@@ -69,3 +79,9 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['category_name']
+        widgets = {
+            'category_name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'category_name': 'Categoria',
+        }

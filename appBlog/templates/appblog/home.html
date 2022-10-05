@@ -59,7 +59,24 @@
             </button>
           </a>
         </div>
-      </div>    
+      </div> 
+      <div>
+        {% if not publications.all %}
+        <br>
+        Aún no hay publicaciones 
+        <br>
+        {% else %}
+        {% for publication in publications %}
+        
+        
+        <table> <strong>{{ publication.title }} | {{ publication.category }} | {{ publication.author }}</strong> <br>
+            
+            {{ publication.body| slice:"255" | safe   }}
+            <br>
+            {% endfor %}
+        {% endif %}
+        
+      </div>   
     </main>
 
   </body>
