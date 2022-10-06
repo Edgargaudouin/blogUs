@@ -28,6 +28,7 @@
     <h3>Usuarios</h3>  
     <a class="btn btn-outline-dark mt-auto" href="{% url 'users' %}">Ver</a> <br>
     <a class="btn btn-outline-dark mt-auto" href="{% url 'updateUser' user.id  %}">Actualizar</a> <br>
+    <a class="btn btn-outline-dark mt-auto" href="{% url 'deleteUser' user.id  %}">Eliminar</a> <br>
     <hr>
     <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Deslogeo</a>
     </lo>

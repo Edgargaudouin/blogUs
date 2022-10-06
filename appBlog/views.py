@@ -198,7 +198,7 @@ def deleteComment(request, id):
     if loger_user == comment_author:
         comment = Comment.objects.get(id=id).delete()
         comments = Comment.objects.all()
-        return render(request, 'appblog/publication/publications.html',{'publications':comments, 'message':'Comentario eliminado'})
+        return render(request, 'appblog/publication/publications.html',{'comments':comments, 'message':'Comentario eliminado'})
     else:
         return render(request, 'appblog/homeLogin.html', {'message':'Error: usuario sin autorización para eliminar esta publicación'} )       
  
@@ -244,50 +244,19 @@ def updateUser(request, id):
         form=UserUpdateForm()
     return render(request, 'appblog/user/edit.html', {'form':form,'id':id})
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
-"""
-    user = User.objects.get(id=id)
-    loger_user = request.user
-    
-    if loger_user == user.username:
-        if request.method == 'POST':
-            form = UserRegisterForm(request.POST)
-            if form.is_valid():
-                data = form.cleaned_data
-                user.first_name = data['first_name'] 
-                user.last_name = data['last_name']
-                user.username = data['username']
-                user.email = data['email']
-                user.password1 = data['password1']
-                user.password2 = data['password2']
-                user.save()
-                return render(request, 'appblog/homeLogin.html', {'message':'Usuario actualizado'})
-            else:
-                form = UserRegisterForm(initial = {'first_name':user.first_name, 'last_name':user.last_name, 'username': user.username, 'email': user.email, 'password1' :user.password1, 'password2': user.password2})
-                return render(request, 'appblog/user/edit.html', {'form':form,'user.first_name':user.first_name, 'user.last_name' :user.last_name,'user.username':user.username, 'user.email':user.email, 'user.password1':user.password1,'user.password2 ':user.password2, 'id':user.id})
-        else:
-            return render(request, 'appblog/homeLogin.html', {'message':'Error'})
 
-
-        
-
-    else:
-        return render(request, 'appblog/user/users.html', {'message':'Usuario no habilitado'})
-"""
 
 @login_required
-def deleteUSer(request, id):
-    pass
-
-   
+def deleteUser(request, id):
+    user = User.objects.get(id=id)
+    loger_user = request.user
+    print(loger_user)
+    print(user.username)
+    if loger_user == user:
+        user.delete()
+        return render(request, 'appblog/home.html',{ 'message':'El usuario ha sido eliminado'})
+    else:
+        return render(request, 'appblog/homeLogin.html', {'message':'Error: usuario sin autorización para eliminar este usuario'} )   
 
 ############################# LOGIN ###############################
 def loginRequest(request):
