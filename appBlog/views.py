@@ -1,4 +1,5 @@
 from email import message
+import email
 from optparse import Values
 from unicodedata import category
 from django.shortcuts import render
@@ -167,57 +168,8 @@ def addComment(request, id):
         form = CommentForm()
         return render(request, 'appblog/comment/commentForm.html',{'form':form , 'id':id})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    """if request.method=='POST':
-        form = CommentForm(request.POST)
-        user_id = User.objects.get(username=request.user.username)
-        if form.is_valid():
-            data=form.cleaned_data
-            body=data['body']
-
-            commen = Comment(username=User(request.user.id), body=body, publication=Publication(publication_id))
-            commen.save()
-            return render(request, 'appblog/publication/publications.html', {'message': 'Comentario realizado'})
-        else:
-            return render(request, 'appblog/publication/publications.html', {'message':'Error al realizar el comentario'})
-    else:
-        form = CommentForm()
-        return render(request, 'appblog/comment/commentForm.html',{'form':form, 'publication_id':publication_id})
-"""
-
-
-
-
 #UPDATE
+@login_required
 def updateComment(request, id):
     comment = Comment.objects.get(id=id)
     loger_user = request.user
@@ -238,6 +190,7 @@ def updateComment(request, id):
     else:
         return render(request, 'appblog/publication/publications.html', {'message':'Usuario no habilitado'})
 #DELETE 
+@login_required
 def deleteComment(request, id):
     comment = Comment.objects.get(id=id)
     loger_user = request.user
@@ -256,28 +209,85 @@ def deleteComment(request, id):
 def seeUsers(request):
     users = User.objects.all()
     return render(request, 'appblog/user/users.html', {'users' : users })
-"""
+
 @login_required
 def updateUser(request, id):
+    user = User.objects.get(id=id)
+    if request.method=='POST':
+        form = UserUpdateForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password1']
+           
+            usernames_in_use = User.objects.filter(username=User.username)
+            emails_in_use = User.objects.filter(email=User.email)
+            if username in usernames_in_use:
+                return render(request, 'appblog/homeLogin.html', {'message':'Error: El nombre de usuario ingresado ya está siendo utilizado'} )
+            elif email in emails_in_use:
+                return render(request, 'appblog/homeLogin.html', {'message':'Error: El email ingresado ya está siendo utilizado'} )
+            else:
+                user.first_name = first_name
+                user.last_name= last_name
+                user.username = username
+                user.email = email
+                user.set_password(password)
+                user.save()
+                print(password)
+                login(request, user)
+                return render(request, 'appblog/user/edit.html', {'message':"Usuario actualizado", 'id':id})
+        else:
+            return render(request, 'appblog/user/edit.html', {'message':"Error: ¡Ingresó datos invalidos!",'form':form, 'id':id})
+    else:
+        form=UserUpdateForm()
+    return render(request, 'appblog/user/edit.html', {'form':form,'id':id})
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+"""
     user = User.objects.get(id=id)
     loger_user = request.user
     
     if loger_user == user.username:
         if request.method == 'POST':
-            pass
+            form = UserRegisterForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                user.first_name = data['first_name'] 
+                user.last_name = data['last_name']
+                user.username = data['username']
+                user.email = data['email']
+                user.password1 = data['password1']
+                user.password2 = data['password2']
+                user.save()
+                return render(request, 'appblog/homeLogin.html', {'message':'Usuario actualizado'})
+            else:
+                form = UserRegisterForm(initial = {'first_name':user.first_name, 'last_name':user.last_name, 'username': user.username, 'email': user.email, 'password1' :user.password1, 'password2': user.password2})
+                return render(request, 'appblog/user/edit.html', {'form':form,'user.first_name':user.first_name, 'user.last_name' :user.last_name,'user.username':user.username, 'user.email':user.email, 'user.password1':user.password1,'user.password2 ':user.password2, 'id':user.id})
         else:
+            return render(request, 'appblog/homeLogin.html', {'message':'Error'})
+
 
         
 
     else:
         return render(request, 'appblog/user/users.html', {'message':'Usuario no habilitado'})
-
+"""
 
 @login_required
 def deleteUSer(request, id):
     pass
 
-    """
+   
 
 ############################# LOGIN ###############################
 def loginRequest(request):

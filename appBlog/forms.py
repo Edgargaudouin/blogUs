@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 class PublicationForm(forms.ModelForm):
     image = forms.ImageField()
     body = forms.CharField(
-        label="mensaje",
+        label="Publicar",
         widget=forms.Textarea(attrs={'class':'form-control', 'rows': 3})
     )
     class Meta:
@@ -46,6 +46,27 @@ class UserRegisterForm(UserCreationForm):
             'email': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
+class UserUpdateForm(UserCreationForm):
+
+    password1 = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={'class':'form-control', 'label':'contraseña'}),
+    )
+    password2 = forms.CharField(
+        label="Confirm password",
+        widget=forms.PasswordInput(attrs={'class':'form-control', 'label':'confirmar contraseña'}),
+    )
+
+    class Meta:
+        model = User
+        fields = ['first_name','last_name', 'username', 'email', 'password1', 'password2']
+        help_texts = {k:"" for k in fields}
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control', }),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', }),
+            'username': forms.TextInput(attrs={'class': 'form-control', }),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 
@@ -58,16 +79,11 @@ class LoginForm(AuthenticationForm):
     )
 
 
-
-
-
-
-
-
-
-
 class CommentForm(forms.ModelForm):
-    
+    body = forms.CharField(
+        label="Comentar",
+        widget=forms.Textarea(attrs={'class':'form-control', 'rows': 3})
+    )
     class Meta:
         model = Comment
         fields = ['body']
