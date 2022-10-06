@@ -21,7 +21,8 @@ def homeLogin(request):
 
 ############################# ABOUT ###############################
 def about(request):
-    return render(request, 'appblog/about.html')
+    is_loged = bool(request.user.username)
+    return render(request, 'appblog/about.html', {'is_loged':is_loged})
 
 ############################# PUBLICATION ###############################
 #CREATE
@@ -147,23 +148,63 @@ def deleteCategory(request, id):
   
     return render(request,'appblog/category/categories.html', {'categories':categories,'message':'Categoria eliminada' })
     
-
-
-    
-    
-
-
 ############################# COMMENT ###############################
 #CREATE
 @login_required
-def addComment(request, publication_id):
-    if request.method=='POST':
+def addComment(request, id):
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            body = data['body']
+            comm = Comment(username=User(request.user.id), body=body, publication=Publication(id))
+            comm.save()
+            return render(request, 'appblog/publication/publications.html', {'message': 'Comentario realizado'})
+        else:
+            return render(request, 'appblog/publication/publications.html', {'message':'Error al realizar el comentario'})
+    else:
+        form = CommentForm()
+        return render(request, 'appblog/comment/commentForm.html',{'form':form , 'id':id})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    """if request.method=='POST':
         form = CommentForm(request.POST)
         user_id = User.objects.get(username=request.user.username)
         if form.is_valid():
             data=form.cleaned_data
             body=data['body']
-            commen = Comment(username=user_id, body=body, publication=Publication(publication_id))
+
+            commen = Comment(username=User(request.user.id), body=body, publication=Publication(publication_id))
             commen.save()
             return render(request, 'appblog/publication/publications.html', {'message': 'Comentario realizado'})
         else:
@@ -171,6 +212,11 @@ def addComment(request, publication_id):
     else:
         form = CommentForm()
         return render(request, 'appblog/comment/commentForm.html',{'form':form, 'publication_id':publication_id})
+"""
+
+
+
+
 #UPDATE
 def updateComment(request, id):
     comment = Comment.objects.get(id=id)
@@ -210,16 +256,28 @@ def deleteComment(request, id):
 def seeUsers(request):
     users = User.objects.all()
     return render(request, 'appblog/user/users.html', {'users' : users })
-
+"""
 @login_required
 def updateUser(request, id):
-    pass
+    user = User.objects.get(id=id)
+    loger_user = request.user
+    
+    if loger_user == user.username:
+        if request.method == 'POST':
+            pass
+        else:
+
+        
+
+    else:
+        return render(request, 'appblog/user/users.html', {'message':'Usuario no habilitado'})
+
 
 @login_required
 def deleteUSer(request, id):
     pass
 
-    
+    """
 
 ############################# LOGIN ###############################
 def loginRequest(request):

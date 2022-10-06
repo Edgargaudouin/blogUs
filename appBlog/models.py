@@ -34,7 +34,7 @@ class Publication(models.Model):
 
 class Comment(models.Model):
     
-    username = models.ForeignKey(User,on_delete=models.CASCADE, default='Edgar') #Nombre comentarista
+    username = models.ForeignKey(User,on_delete=models.CASCADE ) #Nombre comentarista
     body = RichTextField(blank=True, null=True)    
     publication = models.ForeignKey(Publication, related_name="comments", on_delete=models.CASCADE, null =False, blank=False) #Uso el related_name para relacionarlo con el template publications.html
     date_added = models.DateTimeField(auto_now_add=True)

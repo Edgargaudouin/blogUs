@@ -21,23 +21,12 @@
     
     <table> <strong>{{ publication.title }} | {{ publication.category }} | {{ publication.author }}</strong> <br>
         {{ publication.body | safe }}
-        {% if request.user == publication.author %}
-        <br>
-    <button>
-        <a href="{% url 'deletePublication' publication.id %}">Eliminar</a>
-    </button>
-    <button>
-        <a href="{% url 'updatePublication' publication.id %}">Editar</a>
-    </button>
-    
-    {% endif %}
+       
     <br>
     <button>
         <a href="{% url 'seePublication' publication.id %}">Leer más</a>
     </button>
-        <br>
-        <a href="{% url 'addComment' publication.id %}">comentar</a>
-        <br>
+    
     </table>
     <br>
     {% endfor %} 

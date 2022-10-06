@@ -71,9 +71,13 @@
         
         <table> <strong>{{ publication.title }} | {{ publication.category }} | {{ publication.author }}</strong> <br>
             
-            {{ publication.body| slice:"255" | safe   }} ... <button href #boton a categoria 
+            {{ publication.body| slice:"255" | safe }} ... 
             <br>
-            {% endfor %}
+            {% if publication.image %}
+            <img src= "{{ publication.image.url }}" width=200>
+            <br>
+            {% endif %}
+        {% endfor %}
         {% endif %}
         
       </div>   

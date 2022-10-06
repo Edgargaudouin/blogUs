@@ -20,6 +20,16 @@
             <img src= "{{ publication.image.url }}"
             width=200>
         {% endif %}
+
+        {% if request.user == publication.author %}
+        <button>
+            <a href="{% url 'deletePublication' publication.id %}">Eliminar</a>
+        </button>
+        <button>
+            <a href="{% url 'updatePublication' publication.id %}">Editar</a>
+        </button>
+        {% endif %}
+
         <br>
         <strong>Comentarios: </strong>
         <br>
@@ -33,6 +43,10 @@
         {{ comment.body | safe }}
         
         <hr>
+        <button>
+            <a href="{% url 'addComment' publication.id %}">¡Comentar!</a>
+        </button>
+    
         {% if request.user == comment.username %}
         <br>
     <button>
@@ -46,6 +60,7 @@
         
         {% endfor %}
         {% endif %}
+        <br>
         <a href="{% url 'publication' %}">Regresar</a>
 </body>
 

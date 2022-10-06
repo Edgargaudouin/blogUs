@@ -23,10 +23,10 @@
     en particular me gustaría usarlo para dejar un registro de conceptos, ideas y técnicas del deporte que tanto me gusta y apasiona.
 
     - Amor fati -
-{% if request.user.all != NONE %}
-    <a href="{% url 'homeLogin' %}">Regresar</a>
+{% if is_loged == False %}
+    <a href="{% url 'home' %}">Regresar</a>
 {% else %}
-    <a href="{% url '' %}">Regresar</a>    
+    <a href="{% url 'homeLogin' %}">Regresar</a>    
 {% endif %}
 </body>
 
