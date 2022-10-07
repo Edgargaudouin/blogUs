@@ -1,88 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    {% load static %}
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>¡What the blog!</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="appblog/assets/favicon.ico" />
-    <!-- Bootstrap icons-->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href=" {% static 'appblog/css/styles.css' %}" rel="stylesheet" />
-    <link href=" {% static 'appblog/css/home.css' %}" rel="stylesheet" />
-  </head>
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-lg bg-dark">
-        <div class="container-fluid">
-          <div class="d-flex">
-            <a class="navbar-brand" href="{% url 'home' %}">
-              <div class="logo-navbar">
-                <img
-                  src=" {% static 'appblog/assets/logo-no-name.jpeg' %}"
-                  alt="logo"
-                  class="bd-placeholder-img rounded-circle"
-                />
-              </div>
-            </a>
+<html >
+    <head>
+      {% load static %}
+      <meta charset="utf-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <title>¡What the blog!</title>
+      <!-- Favicon-->
+      <link rel="icon" type="image/x-icon" href="appblog/assets/favicon.ico" />
+      <!-- Bootstrap icons-->
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <link href=" {% static 'appblog/css/styles.css' %}" rel="stylesheet" />
+        <link href=" {% static 'appblog/css/home.css' %}" rel="stylesheet" />
+        <style>
+          .masthead {
+            background-image: url("{% static 'appblog/assets/Background.jpeg' %}")
+          }
+        </style>
+      </head>
+    <body id="page-top">
+
+
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <div class="logo-navbar">
+                  <img
+                    src=" {% static 'appblog/assets/logo-no-name.jpeg' %}"
+                    alt="logo"
+                    class="bd-placeholder-img rounded-circle"
+                  />
+                </div>
+                <a class="navbar-brand" href="#page-top">What The Blog</a>
+
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">Sobre nosotros</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#projects">Más recientes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Ingresar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- Masthead-->
+        <div class="masthead">
+        </div>
+
+  <section class="projects-section bg-pale" id="projects">
+        <div class="album py-5 bg-pale">
+          <div class="container">
+      
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% if not publications.all %}
+                Aún no hay publicaciones 
+                {% else %}
+                  {% for publication in publications %}
+
+                    <div class="col">
+                      <div class="card shadow-sm w-200">
+                        {% if publication.image %}
+                        <div height="250px" width="100%" class="d-flex justify-content-center">
+                          <img src= "{{ publication.image.url }}" class="contain-image" >
+                        </div>
+                        {% else %}
+                        <svg class="bd-placeholder-img card-img-top" 
+                        width="100%" 
+                        height="225" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        role="img" 
+                        aria-label="Placeholder: Thumbnail" 
+                        preserveAspectRatio="xMidYMid slice" 
+                        focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                        {% endif %}
+                        <div class="card-body">
+                          <p class="card-text">{{ publication.body| slice:"255" | safe }} ...</p>
+                          <strong>{{ publication.title }} | {{ publication.category }} | {{ publication.author }}</strong>
+                        </div>
+                      </div>
+                    </div>
+
+                {% endfor %}
+                    
+                    {% endif %}
+                
+
+                
+         
+           
+            </div>
           </div>
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link fw-bolder text-bg-dark " href="{% url 'login' %}">Ingresar</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link fw-bolder text-bg-dark " href="{% url 'register' %}">Registrar</a>
-            </li>
-          </ul>
         </div>
-      </nav>
-    </header>
+    </section>
+      
 
-    <main>
-      <div class="p-5 mb-4 bg-light rounded-3">
-        <div class="container-fluid py-5">
-          <h1 class="display-5 fw-bold">Welcome To What the Blog</h1>
-          <p class="col-md-8 fs-4">---</p>
-          <a href="{% url 'about' %}">
-            <button class="btn btn-primary btn-lg" type="button">
-              About us
-            </button>
-          </a>
-        </div>
-      </div> 
-      {{ message }}
-      <div>
-        {% if not publications.all %}
-        <br>
-        Aún no hay publicaciones 
-        <br>
-        {% else %}
-        {% for publication in publications %}
-        
-        
-        <table> <strong>{{ publication.title }} | {{ publication.category }} | {{ publication.author }}</strong> <br>
-            
-            {{ publication.body| slice:"255" | safe }} ... 
-            <br>
-            {% if publication.image %}
-            <img src= "{{ publication.image.url }}" width=200>
-            <br>
-            {% endif %}
-        {% endfor %}
-        {% endif %}
-        
-      </div>   
-    </main>
 
-  </body>
+
+    
+        <!-- Contact-->
+        <section class="contact-section bg-orange" id="contact">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-map-marked-alt text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Dirección</h4>
+                                <hr class="my-4 mx-auto" />
+                                <div class="small text-black-50">Mar del Plata, Argentina</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-envelope text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Email</h4>
+                                <hr class="my-4 mx-auto" />
+                                <div class="small text-black-50">edgar.gaudouin.dev@gmail.com</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-mobile-alt text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Teléfono</h4>
+                                <hr class="my-4 mx-auto" />
+                                <div class="small text-black-50">+54 (223) 423-9186</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="social d-flex justify-content-center">
+                    <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                    <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                    <a class="mx-2" href="https://github.com/Edgargaudouin"><i class="fab fa-github"></i></a>
+                </div>
+                
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="footer bg-greenlight small text-center text-white-50"><div class="container px-4 px-lg-5">Copyright &copy; What The Blog 2022</div></footer>      
+    </body>
 </html>

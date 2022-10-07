@@ -1,40 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INICIO</title>
-    <h2> BlogUs</h2>
-    <h3> Bienvenid@ {{ user.first_name }}</h3>
-</head>
-<body>
-    <h1>Home!</h1>
-    {{ message }}
-    <lo>
-    <h3>About</h3>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'about' %}">Acerca de nosotros</a> <br>
+<html >
+    <head>
+      {% load static %}
+      <meta charset="utf-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <title>¡What the blog!</title>
+      <!-- Favicon-->
+      <link rel="icon" type="image/x-icon" href="appblog/assets/favicon.ico" />
+      <!-- Bootstrap icons-->
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <link href=" {% static 'appblog/css/styles.css' %}" rel="stylesheet" />
+        <link href=" {% static 'appblog/css/home.css' %}" rel="stylesheet" />
+        <style>
+          .masthead {
+            background-image: url("{% static 'appblog/assets/Background.png' %}")
+          }
+        </style>
+      </head>
+    <body id="page-top">
 
-    <h3>Publicaciones</h3>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'publication' %}">Ver</a> <br>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'addPublication' %}">Crear</a> <br>
-   
-    <hr>
-    <h3>Categorias</h3>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'categories' %}">Ver</a> <br>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'addCategory' %}">Agregar</a> <br>
 
-    <hr>
-    <h3>Usuarios</h3>  
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'users' %}">Ver</a> <br>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'updateUser' user.id  %}">Actualizar</a> <br>
-    <a class="btn btn-outline-dark mt-auto" href="{% url 'deleteUser' user.id  %}">Eliminar</a> <br>
-    <hr>
-    <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Deslogeo</a>
-    </lo>
-</body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <div class="logo-navbar">
+                  <img
+                    src=" {% static 'appblog/assets/logo-no-name.jpeg' %}"
+                    alt="logo"
+                    class="bd-placeholder-img rounded-circle"
+                  />
+                </div>
+                <a class="navbar-brand" href="{% url 'home' %}">What The Blog</a>
 
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                 
+                    <ul class="navbar-nav ms-auto">
+                        
+                        <li class="nav-item"><a class="nav-link" href="#">Bienvenid@ {{ user.first_name }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">Sobre nosotros</a></li>
+                  
+                     
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Deslogueo</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+       <h1> {{ message }}</h1>
+
+        <section class="projects-section bg-pale">
+
+        
+
+            <div class="px-4 py-5 my-5 text-center">
+                <h1 class="display-5 fw-bold">Publicaciones</h1>
+                <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">Crea y edita tus publicaciones en pocos minutos!!</p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    {% comment %} <button type="button" class="btn btn-primary btn-lg px-4 gap-3"> <a href="{% url 'publication' %}"> Ver</a></button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4"><a href="{% url 'addPublication' %}"> Crear </a></button> {% endcomment %}
+                    <a class="btn btn-primary btn-lg px-4 gap-3" href="{% url 'publication' %}" > Ver</a>
+                    <a class="btn btn-outline-secondary btn-lg px-4" href="{% url 'addPublication' %}" > Crear</a>
+                </div>
+                </div>
+            </div>
+
+            <div class="px-4 py-5 my-5 text-center bg-greydark" >
+                <h1 class="display-5 fw-bold">Categorías</h1>
+                <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4"></p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    {% comment %} <button type="button" class="btn btn-primary btn-lg px-4 gap-3"> <a href="{% url 'publication' %}"> Ver</a></button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4"><a href="{% url 'addPublication' %}"> Crear </a></button> {% endcomment %}
+                    <a class="btn btn-primary btn-lg px-4 gap-3" href="{% url 'categories' %}" > Ver</a>
+                    <a class="btn btn-outline-secondary btn-lg px-4" href="{% url 'addCategory' %}" > Agregar</a>
+                </div>
+                </div>
+            </div>
+
+            <div class="px-4 py-5 my-5 text-center">
+                <h1 class="display-5 fw-bold">Usuarios</h1>
+                <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4"></p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    {% comment %} <button type="button" class="btn btn-primary btn-lg px-4 gap-3"> <a href="{% url 'publication' %}"> Ver</a></button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4"><a href="{% url 'addPublication' %}"> Crear </a></button> {% endcomment %}
+                    <a class="btn btn-primary btn-lg px-4 gap-3" href="{% url 'users' %}" > Ver</a>
+                    <a class="btn btn-secondary btn-lg px-4 gap-3" href="{% url 'updateUser' user.id %}" > Modificar</a>
+                    <a class="btn btn-danger btn-lg px-4 gap-3" href="{% url 'deleteUser' user.id %}" > Eliminar</a>
+                  
+                </div>
+                </div>
+            </div>
+
+        </section>
+
+      
+
+        <!-- Footer-->
+        <footer class="footer bg-greenlight small text-center text-white-50"><div class="container px-4 px-lg-5">Copyright &copy; What The Blog 2022</div></footer>      
+    </body>
 </html>
-
-
-

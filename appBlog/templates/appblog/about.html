@@ -9,28 +9,222 @@
     <h3> Acerca de nosotros </h3>
 </head>
 <body>
-    <strong> <h3> Edgar Romero </h3> </strong>
-    Mi nombre es Edgar, actualmente resido en Mar del plata Argentina, pero nací y me crié en Puerto Ordaz Venezuela, tengo 24 años de
-    edad, entreno Jiu jitsu brasilero hace aproximadamente 9 años, por lo cual poseo un cinturón marrón en esta disciplina.
-    En mi formación academica puedo destacar los 4 años de cursado en Ingenieria Industrial en una famosa universidad de mi 
-    ciudad natal, pero por la situación politico-economica de Venezuela tuve que decirle adios a mi país y despedirme de mis familiares y amigos en busqueda de 
-    un mejor futuro... ya estando en Argentina alrededor del 2018 y con 20 años de edad decido empezar a estudiar licenciatura en comercialización
-    (marketing), y apoyandome en mi actual trabajo pude ganar un gran conocimiento y experiencia, en dicho trabajo tuve el primer contacto
-    con el analisis de datos, cosa que me llamó la atención y hoy por hoy me apasiona muchisimo, cosa por la cual decidí hacer el curso de Python
-    para seguir desarrollando conocimiento, y acá estoy intentando hacer un Blog lo más descente posible.
-
-    La idea del proyecto es hacer un blog para que personas de todo el mundo pueda hacer publicaciones con relacion a temas o tópicos de itnerés propio,
-    en particular me gustaría usarlo para dejar un registro de conceptos, ideas y técnicas del deporte que tanto me gusta y apasiona.
-
-    - Amor fati -
-{% if is_loged == False %}
-    <a href="{% url 'home' %}">Regresar</a>
-{% else %}
-    <a href="{% url 'homeLogin' %}">Regresar</a>    
-{% endif %}
+    
 </body>
 
 </html>
 
 
+<html >
+    <head>
+      {% load static %}
+      <meta charset="utf-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <title>¡What the blog!</title>
+      <!-- Favicon-->
+      <link rel="icon" type="image/x-icon" href="appblog/assets/favicon.ico" />
+      <!-- Bootstrap icons-->
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <link href=" {% static 'appblog/css/styles.css' %}" rel="stylesheet" />
+        <link href=" {% static 'appblog/css/home.css' %}" rel="stylesheet" />
+        
+        </style>
+      </head>
+    <body id="page-top">
 
+
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <div class="logo-navbar">
+                  <img
+                    src=" {% static 'appblog/assets/logo-no-name.jpeg' %}"
+                    alt="logo"
+                    class="bd-placeholder-img rounded-circle"
+                  />
+                </div>
+            
+                <a class="navbar-brand" href="{% url 'home' %}">What The Blog</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#about">Sobre nosotros</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
+
+                        {% if is_loged == False %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Ingresar</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrar</a></li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Deslogueo</a></li>
+                        {% endif %}
+
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+          <!-- Masthead-->
+          <header class="masthead bg-greendark">
+            <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+                <div class="d-flex justify-content-center">
+                    <div class="text-center">
+                         <h1 class="mx-auto my-0 text-uppercase">Sobre nosotros</h1>
+                      
+                         <a class="btn btn-primary" href="#about">Conocenos</a> 
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+
+        <section class="projects-section bg-pale" id="about">
+
+            <div class="container px-4 px-lg-5">
+                <!-- Featured Project Row-->
+                <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
+
+                   
+                        {% comment %} .masthead {
+                          background-image: url("{% static 'appblog/assets/Background.png' %}")
+                        } {% endcomment %}
+                    <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="{% static 'appblog/assets/Banner1_Gris.jpeg' %}" alt="..." /></div>
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="featured-text text-center text-lg-left">
+                            <h4>Mi historia</h4>
+                            <p class="text-black-50 mb-0">Mi nombre es Edgar Romero, tengo 24 años, soy Venezolano y resido en la hermosa ciudad de Mar del Plata y esta es mi historia...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project One Row-->
+                <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6">
+                        <div class="bg-greenlight text-center h-100 project">
+                            <div class="d-flex h-100">
+                                <div class="project-text w-100 my-auto text-center text-lg-left">
+                                    <h4 class="text-white">Estudios</h4>
+                                    <p class="mb-0 text-white-50">Estudio licenciatura en comercialización (marketing), y en mi  trabajo actual he ganado un gran conocimiento y experiencia, donde tuve el primer contacto con el analisis de datos, cosa que me llamó la atención y hoy por hoy me apasiona muchisimo, cosa por la cual decidí hacer el curso de Python para seguir desarrollando conocimiento</p>
+                                    <hr class="d-none d-lg-block mb-0 ms-0" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Two Row-->
+                <div class="row gx-0 justify-content-center">
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6 order-lg-first">
+                        <div class="bg-greenlight text-center h-100 project">
+                            <div class="d-flex h-100">
+                                <div class="project-text w-100 my-auto text-center text-lg-right">
+                                    <h4 class="text-white">Mi pasión</h4>
+                                    <p class="mb-0 text-white-50">El jiu-jitsu brasilero es mi mayor pasion, practicarlo me ayuda a mantener mi mente enfocada en mis metas</p>
+                                    <hr class="d-none d-lg-block mb-0 me-0" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> 
+
+
+
+        <section class="projects-section bg-greendark" id="aboutMore">
+            <div class="container">
+                <strong> <h3> Edgar Romero </h3> </strong>
+                Mi nombre es Edgar, actualmente resido en Mar del plata Argentina, pero nací y me crié en Puerto Ordaz Venezuela, tengo 24 años de
+                edad, entreno Jiu jitsu brasilero hace aproximadamente 9 años, por lo cual poseo un cinturón marrón en esta disciplina.
+                En mi formación academica puedo destacar los 4 años de cursado en Ingenieria Industrial en una famosa universidad de mi
+                ciudad natal, pero por la situación politico-economica de Venezuela tuve que decirle adios a mi país y despedirme de mis familiares y amigos en busqueda de
+                un mejor futuro... ya estando en Argentina alrededor del 2018 y con 20 años de edad decido empezar a estudiar licenciatura en comercialización
+                (marketing), y apoyandome en mi actual trabajo pude ganar un gran conocimiento y experiencia, en dicho trabajo tuve el primer contacto
+                con el analisis de datos, cosa que me llamó la atención y hoy por hoy me apasiona muchisimo, cosa por la cual decidí hacer el curso de Python
+                para seguir desarrollando conocimiento, y acá estoy intentando hacer un Blog lo más descente posible.
+
+                La idea del proyecto es hacer un blog para que personas de todo el mundo pueda hacer publicaciones con relacion a temas o tópicos de itnerés propio,
+                en particular me gustaría usarlo para dejar un registro de conceptos, ideas y técnicas del deporte que tanto me gusta y apasiona.
+
+                - Amor fati -
+
+                {% if is_loged == False %}
+                <a href="{% url 'home' %}">Regresar</a>
+            {% else %}
+                <a href="{% url 'homeLogin' %}">Regresar</a>
+            {% endif %}
+
+            </div>
+
+        </section> 
+
+
+
+        <!-- Contact-->
+        <section class="contact-section bg-orange" id="contact">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-map-marked-alt text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Dirección</h4>
+                                <hr class="my-4 mx-auto" />
+                                <div class="small text-black-50">Mar del Plata, Argentina</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-envelope text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Email</h4>
+                                <hr class="my-4 mx-auto" />
+                                <div class="small text-black-50">edgar.gaudouin.dev@gmail.com</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-mobile-alt text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Teléfono</h4>
+                                <hr class="my-4 mx-auto" />
+                                <div class="small text-black-50">+54 (223) 423-9186</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="social d-flex justify-content-center">
+                    <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                    <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                    <a class="mx-2" href="https://github.com/Edgargaudouin"><i class="fab fa-github"></i></a>
+                </div>
+
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="footer bg-greenlight small text-center text-white-50"><div class="container px-4 px-lg-5">Copyright &copy; What The Blog 2022</div></footer>
+    </body>
+</html>
